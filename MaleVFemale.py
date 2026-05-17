@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import plotly.express as px
 
@@ -9,6 +10,7 @@ male_code = "SP.DYN.IMRT.MA.IN"
 female_code = "SP.DYN.IMRT.FE.IN"
 
 year_cols = [col for col in data.columns if "[YR" in col]
+
 
 def clean_indicator(series_code, value_name):
     temp = data[data["Series Code"] == series_code].copy()
@@ -29,6 +31,7 @@ def clean_indicator(series_code, value_name):
     )
 
     return temp
+
 
 male = clean_indicator(male_code, "male_mortality")
 female = clean_indicator(female_code, "female_mortality")
@@ -86,7 +89,8 @@ fig = px.choropleth(
 
 fig.update_layout(
     title_x=0.5,
-    height=750,
+    height=740,
+    margin=dict(l=10, r=10, t=70, b=10),
     coloraxis_colorbar=dict(
         title="Male − Female<br>deaths per 1,000",
         tickvals=[-15, -10, -5, 0, 5, 10, 15],
@@ -110,6 +114,14 @@ fig.update_geos(
     countrycolor="#444444",
     showland=True,
     landcolor="lightgray"
+)
+
+os.makedirs("static/dashboards", exist_ok=True)
+
+fig.write_html(
+    "static/dashboards/MaleVFemale.html",
+    include_plotlyjs="cdn",
+    full_html=True
 )
 
 fig.show()
