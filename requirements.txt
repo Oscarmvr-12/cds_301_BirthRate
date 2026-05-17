@@ -1,0 +1,9 @@
+dash
+pandas
+plotly
+openpyxl
+geopandas
+gunicorn
+shapely
+pyproj
+fiona
