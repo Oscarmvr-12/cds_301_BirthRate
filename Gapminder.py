@@ -3,10 +3,6 @@ import geopandas as gpd
 import plotly.graph_objects as go
 from dash import Dash, dcc, html, Input, Output, State
 
-# =========================
-# LOAD DATA
-# =========================
-
 file_path = "P_Data_Extract_From_World_Development_Indicators.xlsx"
 
 data = pd.read_excel(file_path, sheet_name="Data", engine="openpyxl")
@@ -73,10 +69,6 @@ df["male_mortality"] = df["male_mortality"].round(1)
 df["female_mortality"] = df["female_mortality"].round(1)
 df["mortality_gap"] = df["mortality_gap"].round(2)
 
-# =========================
-# ADD REGIONS
-# =========================
-
 world_url = "https://naturalearth.s3.amazonaws.com/110m_cultural/ne_110m_admin_0_countries.zip"
 world = gpd.read_file(world_url)
 
@@ -89,10 +81,6 @@ regions = world[["ADM0_A3", "CONTINENT"]].rename(
 
 df = df.merge(regions, on="Country Code", how="left")
 df["region"] = df["region"].fillna("Other")
-
-# =========================
-# OPTIONS
-# =========================
 
 valid_regions = sorted(
     region for region in df["region"].dropna().unique()
@@ -125,10 +113,6 @@ label_positions = [
     "middle right",
     "middle left"
 ]
-
-# =========================
-# DASH APP
-# =========================
 
 app = Dash(__name__)
 server = app.server
@@ -222,7 +206,7 @@ app.layout = html.Div(
                         html.Hr(),
 
                         html.Div(
-                            "This chart shows how countries move as infant mortality declines and the male–female mortality gap changes.",
+                            "Region selection controls the background points. Country selection works independently and always shows selected country trails.",
                             style={
                                 "fontSize": "14px",
                                 "lineHeight": "1.4",
@@ -286,9 +270,6 @@ app.layout = html.Div(
     ]
 )
 
-# =========================
-# CALLBACKS
-# =========================
 
 @app.callback(
     Output("interval", "disabled"),
@@ -298,6 +279,7 @@ app.layout = html.Div(
 def toggle_play(n_clicks, disabled):
     if n_clicks == 0:
         return True
+
     return not disabled
 
 
@@ -309,6 +291,7 @@ def toggle_play(n_clicks, disabled):
 def animate_year(n_intervals, current_year):
     if current_year >= 2024:
         return 1960
+
     return current_year + 1
 
 
@@ -320,17 +303,13 @@ def animate_year(n_intervals, current_year):
 )
 def update_graph(selected_regions, selected_countries, selected_year):
 
-    if selected_countries is None:
-        selected_countries = []
-
     if selected_regions is None:
         selected_regions = []
 
-    # This makes Plotly preserve the user's zoom/pan while the year changes.
-    # It only resets when country or region filters change.
-    filter_key = "|".join(sorted(selected_regions)) + "||" + "|".join(sorted(selected_countries))
+    if selected_countries is None:
+        selected_countries = []
 
-    # Region filter controls background points only.
+    # Background points depend only on selected regions.
     if not selected_regions:
         background_data = df.iloc[0:0].copy()
     else:
@@ -370,7 +349,7 @@ def update_graph(selected_regions, selected_countries, selected_year):
                 marker=dict(
                     size=region_data["total_mortality"].clip(lower=8, upper=160) / 3.8,
                     color=region_colors.get(region, "#999999"),
-                    opacity=0.35,
+                    opacity=0.38,
                     line=dict(width=0.5, color="white")
                 ),
                 text=region_data["Country Name"],
@@ -473,13 +452,9 @@ def update_graph(selected_regions, selected_countries, selected_year):
         plot_bgcolor="white",
         paper_bgcolor="white",
 
-        # This prevents the graph from awkwardly re-autoscaling every year.
-        # It only changes when filters change.
-        uirevision=filter_key,
-
         xaxis=dict(
             title="Total infant mortality, deaths per 1,000 live births",
-            range=[0, 250],
+            range=[0, 35],
             automargin=True,
             gridcolor="#e6e6e6",
             zeroline=False
@@ -493,7 +468,6 @@ def update_graph(selected_regions, selected_countries, selected_year):
             zeroline=True,
             zerolinecolor="#555555"
         ),
-
 
         legend=dict(
             title="Region / Highlighted Countries",
@@ -512,10 +486,6 @@ def update_graph(selected_regions, selected_countries, selected_year):
 
     return fig
 
-
-# =========================
-# RUN APP
-# =========================
 
 if __name__ == "__main__":
     app.run(debug=False)
