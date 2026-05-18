@@ -251,7 +251,8 @@ app.layout = html.Div(
 
                         dcc.Graph(
                             id="transition-graph",
-                            style={"height": "calc(100vh - 115px)"}
+                            style={"height": "calc(100vh - 132px)"},
+                            config={"responsive": True, "displayModeBar": False}
                         ),
 
                         html.Div(
@@ -453,7 +454,7 @@ def update_graph(selected_regions, selected_countries, selected_year):
         paper_bgcolor="#fffdfa",
 
         xaxis=dict(
-            title="Total infant mortality, deaths per 1,000 live births",
+            title="Total infant mortality (per 1,000 live births)",
             range=[0, 230],
             automargin=True,
             gridcolor="#ded8ce",
@@ -461,7 +462,7 @@ def update_graph(selected_regions, selected_countries, selected_year):
         ),
 
         yaxis=dict(
-            title="Male − Female infant mortality gap",
+            title="Male - Female mortality gap",
             range=[-10, 35],
             automargin=True,
             gridcolor="#ded8ce",
@@ -471,9 +472,13 @@ def update_graph(selected_regions, selected_countries, selected_year):
 
         legend=dict(
             title="Region / Highlighted Countries",
-            x=1.02,
-            y=1,
-            bgcolor="rgba(255,255,255,0.85)"
+            orientation="h",
+            x=0,
+            y=-0.24,
+            xanchor="left",
+            yanchor="top",
+            bgcolor="rgba(255,253,250,0)",
+            font=dict(size=11)
         ),
 
         transition=dict(
@@ -482,7 +487,7 @@ def update_graph(selected_regions, selected_countries, selected_year):
         ),
 
         font=dict(family="Inter, Arial, sans-serif", color="#181716"),
-        margin=dict(l=80, r=210, t=70, b=48)
+        margin=dict(l=64, r=24, t=70, b=148)
     )
 
     return fig

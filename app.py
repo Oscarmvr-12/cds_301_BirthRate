@@ -358,6 +358,13 @@ transition_region_colors = {
     "Other": "#918b82"
 }
 
+transition_label_positions = [
+    "top center",
+    "bottom center",
+    "middle right",
+    "middle left"
+]
+
 # =========================
 # DASH APP
 # =========================
@@ -513,7 +520,9 @@ infant_layout = html.Div(
 
                         dcc.Graph(
                             id="infant-map-graph",
-                            className="dashboard-graph", style={"height": "calc(100vh - 112px)"}
+                            className="dashboard-graph",
+                            style={"height": "calc(100vh - 112px)"},
+                            config={"responsive": True, "displayModeBar": False}
                         ),
 
                         html.Div(
@@ -608,7 +617,7 @@ transition_layout = html.Div(
                         html.Hr(),
 
                         html.Div(
-                            "This chart shows how countries move as infant mortality declines and the transition_male–transition_female mortality gap changes.",
+                            "Region selection controls the background points. Clear Regions to show highlighted countries only; selected country trails always remain visible.",
                             style={"fontSize": "14px", "lineHeight": "1.45", "color": COLORS["muted"]}
                         )
                     ]
@@ -640,7 +649,9 @@ transition_layout = html.Div(
 
                         dcc.Graph(
                             id="transition-graph",
-                            className="dashboard-graph", style={"height": "calc(100vh - 132px)"}
+                            className="dashboard-graph",
+                            style={"height": "calc(100vh - 132px)"},
+                            config={"responsive": True, "displayModeBar": False}
                         ),
 
                         html.Div(
@@ -1013,19 +1024,24 @@ def update_transition_graph(selected_regions, selected_countries, selected_year)
     if selected_countries is None:
         selected_countries = []
 
-    # If no transition_regions selected, show an empty chart
+    if selected_regions is None:
+        selected_regions = []
+
+    # Region selection controls only the background cloud.
+    # Clearing regions intentionally hides background countries while keeping
+    # highlighted country trails visible.
     if not selected_regions:
-        plot_data = transition_df.iloc[0:0].copy()
+        background_data = transition_df.iloc[0:0].copy()
     else:
-        plot_data = transition_df.copy()
+        background_data = transition_df.copy()
 
         if "All" not in selected_regions:
-            plot_data = plot_data[
-                plot_data["region"].isin(selected_regions)
+            background_data = background_data[
+                background_data["region"].isin(selected_regions)
             ]
 
-    current_data = plot_data[
-        plot_data["year"] == selected_year
+    current_data = background_data[
+        background_data["year"] == selected_year
     ].copy()
 
     fig = go.Figure()
@@ -1074,16 +1090,16 @@ def update_transition_graph(selected_regions, selected_countries, selected_year)
     # SELECTED COUNTRY TRAILS
     # =========================
 
-    for country in selected_countries:
+    for i, country in enumerate(selected_countries):
 
-        country_data = plot_data[
-            (plot_data["Country Name"] == country) &
-            (plot_data["year"] <= selected_year)
+        country_data = transition_df[
+            (transition_df["Country Name"] == country) &
+            (transition_df["year"] <= selected_year)
         ].copy()
 
-        current_country = plot_data[
-            (plot_data["Country Name"] == country) &
-            (plot_data["year"] == selected_year)
+        current_country = transition_df[
+            (transition_df["Country Name"] == country) &
+            (transition_df["year"] == selected_year)
         ].copy()
 
         if country_data.empty:
@@ -1107,6 +1123,7 @@ def update_transition_graph(selected_regions, selected_countries, selected_year)
 
         if not current_country.empty:
             region = current_country["region"].iloc[0]
+            label_position = transition_label_positions[i % len(transition_label_positions)]
 
             fig.add_trace(
                 go.Scatter(
@@ -1115,7 +1132,7 @@ def update_transition_graph(selected_regions, selected_countries, selected_year)
                     mode="markers+text",
                     name=country,
                     text=[country],
-                    textposition="top center",
+                    textposition=label_position,
                     textfont=dict(
                         size=13,
                         color=COLORS["ink"],
@@ -1159,14 +1176,14 @@ def update_transition_graph(selected_regions, selected_countries, selected_year)
         paper_bgcolor=COLORS["surface"],
 
         xaxis=dict(
-            title="Total infant mortality, deaths per 1,000 live births",
+            title="Total infant mortality (per 1,000 live births)",
             range=[0, 230],
             gridcolor=COLORS["line"],
             zeroline=False
         ),
 
         yaxis=dict(
-            title="Male − Female infant mortality gap",
+            title="Male - Female mortality gap",
             range=[-10, 32],
             gridcolor=COLORS["line"],
             zeroline=True,
@@ -1175,13 +1192,17 @@ def update_transition_graph(selected_regions, selected_countries, selected_year)
 
         legend=dict(
             title="Region / Highlighted Countries",
-            x=1.02,
-            y=1,
-            bgcolor="rgba(255,253,250,0.9)"
+            orientation="h",
+            x=0,
+            y=-0.24,
+            xanchor="left",
+            yanchor="top",
+            bgcolor="rgba(255,253,250,0)",
+            font=dict(size=11)
         ),
 
         font=dict(family=FONT_STACK, color=COLORS["ink"]),
-        margin=dict(l=80, r=210, t=70, b=48)
+        margin=dict(l=64, r=24, t=70, b=148)
     )
 
     return fig
