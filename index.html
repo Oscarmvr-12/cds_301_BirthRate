@@ -290,6 +290,8 @@
 
     .figure {
       margin: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
     }
 
     .figure img {
@@ -298,6 +300,13 @@
       border-radius: var(--radius);
       background: var(--surface);
       box-shadow: var(--shadow);
+      transform-origin: center;
+      transition: transform 220ms ease, box-shadow 220ms ease;
+    }
+
+    .figure:hover img {
+      transform: scale(1.035);
+      box-shadow: 0 28px 80px rgba(23, 23, 23, 0.12);
     }
 
     .figure-narrow {
@@ -376,6 +385,7 @@
 
     .dashboard-frame iframe {
       width: max(100%, 1024px);
+      max-width: none;
       height: 100%;
       border: 0;
       background: var(--surface);
@@ -581,6 +591,17 @@
 
       .dashboard-frame iframe {
         width: 960px;
+        max-width: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .figure img {
+        transition: none;
+      }
+
+      .figure:hover img {
+        transform: none;
       }
     }
   </style>
@@ -635,10 +656,13 @@
           </div>
           <div class="section-text">
             <p data-i18n="abstractP1">
-              Countries are often labeled as developed using income-based thresholds such as GNI per capita. However, income alone may not fully capture the broader social conditions associated with development. In this project, we examine whether social indicators such as fertility, infant mortality, migrant share, aging, and service-sector employment align with conventional GNI-based classifications.
+              Traditional definitions of developed countries often rely heavily on economic measures such as Gross National Income (GNI) per capita. However, income alone may not fully capture the broader social, demographic, and health conditions associated with development. This project explores whether social indicators such as fertility, infant mortality, migration, and demographic inequality provide additional insight into how development should be understood and classified.
             </p>
             <p data-i18n="abstractP2">
-              Using World Bank World Development Indicators and country groupings from the UN World Economic Situation and Prospects framework, we compare patterns across countries to show that development is multidimensional and that broader social indicators may reveal important differences that income-based definitions overlook.
+              Using data from the World Bank World Development Indicators and country group classifications from the United Nations World Economic Situation and Prospects framework, we examine global patterns across fertility rates, infant mortality, migrant share, and sex-based mortality differences. Through a combination of choropleth maps, box plots, and interactive dashboards built using Python, Plotly Dash, and web-based visualization tools, the project visualizes how countries transition through different stages of development over time.
+            </p>
+            <p data-i18n="abstractP3">
+              The findings suggest that development is multidimensional and uneven rather than purely income-based. While many countries experience substantial improvements in healthcare and demographic outcomes, regional disparities and demographic inequalities often persist despite broader economic growth. Overall, the project demonstrates that social and demographic indicators can provide a more comprehensive understanding of development than income classifications alone.
             </p>
           </div>
         </div>
@@ -870,8 +894,9 @@
         heroTitle: "Visualizing Global Development Through Demographic and Health Indicators",
         heroCopy: "A compact visual study of how fertility, migration, infant mortality, aging, and service-sector employment complicate income-based definitions of development.",
         abstractTitle: "Abstract",
-        abstractP1: "Countries are often labeled as developed using income-based thresholds such as GNI per capita. However, income alone may not fully capture the broader social conditions associated with development. In this project, we examine whether social indicators such as fertility, infant mortality, migrant share, aging, and service-sector employment align with conventional GNI-based classifications.",
-        abstractP2: "Using World Bank World Development Indicators and country groupings from the UN World Economic Situation and Prospects framework, we compare patterns across countries to show that development is multidimensional and that broader social indicators may reveal important differences that income-based definitions overlook.",
+        abstractP1: "Traditional definitions of developed countries often rely heavily on economic measures such as Gross National Income (GNI) per capita. However, income alone may not fully capture the broader social, demographic, and health conditions associated with development. This project explores whether social indicators such as fertility, infant mortality, migration, and demographic inequality provide additional insight into how development should be understood and classified.",
+        abstractP2: "Using data from the World Bank World Development Indicators and country group classifications from the United Nations World Economic Situation and Prospects framework, we examine global patterns across fertility rates, infant mortality, migrant share, and sex-based mortality differences. Through a combination of choropleth maps, box plots, and interactive dashboards built using Python, Plotly Dash, and web-based visualization tools, the project visualizes how countries transition through different stages of development over time.",
+        abstractP3: "The findings suggest that development is multidimensional and uneven rather than purely income-based. While many countries experience substantial improvements in healthcare and demographic outcomes, regional disparities and demographic inequalities often persist despite broader economic growth. Overall, the project demonstrates that social and demographic indicators can provide a more comprehensive understanding of development than income classifications alone.",
         fertilityTitle: "Fertility and Development",
         fertilityIntro: "Fertility decline is one of the most widely observed demographic patterns associated with development. Lower fertility often emerges alongside urbanization, women's education, rising living costs, and expanded access to healthcare and family planning.",
         fertilityCaption1: "Figure 1A. Fertility patterns across countries and development groups.",
@@ -926,8 +951,9 @@
         heroTitle: "인구 및 보건 지표로 살펴보는 세계 발전",
         heroCopy: "출산율, 이주, 영아 사망률, 고령화, 서비스업 고용이 소득 중심의 발전국가 정의를 어떻게 더 복합적으로 만드는지 살펴보는 시각화 프로젝트입니다.",
         abstractTitle: "초록",
-        abstractP1: "국가는 종종 1인당 GNI와 같은 소득 기준에 따라 선진국으로 분류됩니다. 그러나 소득만으로는 발전과 관련된 더 넓은 사회적 조건을 충분히 설명하기 어렵습니다. 이 프로젝트는 출산율, 영아 사망률, 이주민 비중, 고령화, 서비스업 고용과 같은 사회 지표가 기존의 GNI 기반 분류와 어떻게 맞물리는지 살펴봅니다.",
-        abstractP2: "세계은행 세계개발지표와 UN 세계경제상황전망의 국가 분류를 활용하여 국가 간 패턴을 비교하고, 발전이 다차원적인 개념이며 소득 기준만으로는 놓칠 수 있는 중요한 사회적 차이가 있음을 보여줍니다.",
+        abstractP1: "선진국에 대한 전통적인 정의는 1인당 국민총소득(GNI)과 같은 경제 지표에 크게 의존하는 경우가 많습니다. 그러나 소득만으로는 발전과 관련된 더 넓은 사회적, 인구학적, 보건 조건을 충분히 설명하기 어렵습니다. 이 프로젝트는 출산율, 영아 사망률, 이주, 인구학적 불평등과 같은 사회 지표가 발전을 이해하고 분류하는 데 어떤 추가적인 통찰을 제공하는지 탐구합니다.",
+        abstractP2: "세계은행 세계개발지표와 유엔 세계경제상황전망의 국가 그룹 분류를 활용하여 출산율, 영아 사망률, 이주민 비중, 성별 사망률 차이에 나타나는 세계적 패턴을 분석합니다. 단계구분도, 박스 플롯, Python과 Plotly Dash 및 웹 기반 시각화 도구로 제작한 인터랙티브 대시보드를 통해 국가들이 시간에 따라 서로 다른 발전 단계로 이동하는 과정을 시각화합니다.",
+        abstractP3: "분석 결과는 발전이 순수하게 소득 기반인 것이 아니라 다차원적이고 불균등한 과정임을 보여줍니다. 많은 국가가 보건의료와 인구학적 결과에서 큰 개선을 경험했지만, 지역 격차와 인구학적 불평등은 더 넓은 경제 성장에도 불구하고 지속되는 경우가 많습니다. 전반적으로 이 프로젝트는 사회 및 인구학적 지표가 소득 분류만으로는 얻기 어려운 더 종합적인 발전 이해를 제공할 수 있음을 보여줍니다.",
         fertilityTitle: "출산율과 발전",
         fertilityIntro: "출산율 감소는 발전과 관련해 가장 널리 관찰되는 인구학적 변화 중 하나입니다. 낮은 출산율은 도시화, 여성 교육, 생활비 상승, 보건의료 및 가족계획 접근성 확대와 함께 나타나는 경우가 많습니다.",
         fertilityCaption1: "그림 1A. 국가 및 발전 그룹별 출산율 패턴.",
