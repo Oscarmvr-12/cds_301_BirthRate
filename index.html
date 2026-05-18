@@ -539,11 +539,18 @@
     }
 
     .dashboard-frame iframe {
-      width: max(100%, 1024px);
-      max-width: none;
+      width: 100%;
       height: 100%;
       border: 0;
       background: var(--surface);
+    }
+
+    .dashboard-interactive-frame {
+      width: min(1280px, 100%);
+      height: min(900px, 84vh);
+      min-height: 680px;
+      margin: 24px auto 0;
+      overflow: hidden;
     }
 
     .dashboard-large {
@@ -759,9 +766,13 @@
         display: flex;
       }
 
-      .dashboard-mobile-panel,
-      .dashboard-frame {
+      .dashboard-mobile-panel {
         display: none;
+      }
+
+      .dashboard-interactive-frame {
+        height: 76vh;
+        min-height: 560px;
       }
 
       .dashboard-large,
@@ -771,8 +782,7 @@
       }
 
       .dashboard-frame iframe {
-        width: 960px;
-        max-width: none;
+        width: 100%;
       }
     }
 
@@ -1029,15 +1039,17 @@
 
           <figure class="figure dashboard-full-preview">
             <div class="figure-bar">
-              <span data-i18n="dash2Frame">Full Static Preview</span>
+              <span data-i18n="dash2Frame">Interactive Plotly View</span>
               <span class="figure-source" data-i18n="figureSourceWdi">World Bank WDI</span>
             </div>
-            <img src="./static/images/male_female_full_preview.png" alt="Full static preview of the male-female infant mortality gap visualization">
-            <figcaption data-i18n="dash2Caption">Full-size static preview. Open the standalone chart for animation, tooltips, zoom, and pan.</figcaption>
+            <div class="dashboard-frame dashboard-interactive-frame">
+              <iframe title="Male Female Infant Mortality Gap" src="./static/dashboards/MaleVFemale.html"></iframe>
+            </div>
+            <figcaption data-i18n="dash2Caption">Interactive standalone Plotly chart with animation, tooltips, zoom, and pan.</figcaption>
           </figure>
 
           <div class="dashboard-preview-copy dashboard-full-preview">
-            <p data-i18n="dash2PreviewText">The website now shows the full chart preview without a cramped scroll frame. Open the standalone Plotly file when you want the interactive version.</p>
+            <p data-i18n="dash2PreviewText">This chart is fully usable on the website. Open the standalone Plotly file if you want an even larger full-browser view.</p>
             <div class="feature-chips" aria-label="Dashboard features">
               <span class="feature-chip" data-i18n="featureAnimation">Animated years</span>
               <span class="feature-chip" data-i18n="featureTooltip">Tooltips</span>
@@ -1186,9 +1198,9 @@
         dash2Title: "Male-Female Infant Mortality Gap",
         dash2Intro: "This visualization isolates the male-female infant mortality gap across countries and over time. Positive values indicate higher male infant mortality, while negative values indicate higher female infant mortality.",
         dash2Mobile: "Open the dashboard directly for the clearest mobile view.",
-        dash2Frame: "Full Static Preview",
-        dash2Caption: "Full-size static preview. Open the standalone chart for animation, tooltips, zoom, and pan.",
-        dash2PreviewText: "The website now shows the full chart preview without a cramped scroll frame. Open the standalone Plotly file when you want the interactive version.",
+        dash2Frame: "Interactive Plotly View",
+        dash2Caption: "Interactive standalone Plotly chart with animation, tooltips, zoom, and pan.",
+        dash2PreviewText: "This chart is fully usable on the website. Open the standalone Plotly file if you want an even larger full-browser view.",
         featureAnimation: "Animated years",
         featureTooltip: "Tooltips",
         featureZoomPan: "Zoom and pan",
@@ -1274,9 +1286,9 @@
         dash2Title: "남아-여아 영아 사망률 격차",
         dash2Intro: "이 시각화는 국가와 시간에 따른 남아-여아 영아 사망률 격차를 분리하여 보여줍니다. 양수는 남아 영아 사망률이 더 높음을, 음수는 여아 영아 사망률이 더 높음을 의미합니다.",
         dash2Mobile: "가장 선명한 모바일 화면을 위해 대시보드를 직접 열어 보세요.",
-        dash2Frame: "전체 정적 미리보기",
-        dash2Caption: "전체 크기 정적 미리보기입니다. 애니메이션, 툴팁, 확대와 이동은 독립형 차트에서 사용할 수 있습니다.",
-        dash2PreviewText: "웹사이트에서는 좁은 스크롤 프레임 없이 전체 차트 미리보기를 보여줍니다. 상호작용이 필요할 때는 독립형 Plotly 파일을 열어 보세요.",
+        dash2Frame: "인터랙티브 Plotly 보기",
+        dash2Caption: "애니메이션, 툴팁, 확대와 이동이 가능한 독립형 Plotly 인터랙티브 차트입니다.",
+        dash2PreviewText: "이 차트는 웹사이트 안에서 바로 사용할 수 있습니다. 더 큰 전체 브라우저 화면이 필요하면 독립형 Plotly 파일을 열어 보세요.",
         featureAnimation: "연도 애니메이션",
         featureTooltip: "툴팁",
         featureZoomPan: "확대 및 이동",
