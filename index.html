@@ -414,6 +414,53 @@
       text-align: center;
     }
 
+    .dashboard-preview-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(260px, 0.9fr);
+      gap: clamp(22px, 4vw, 42px);
+      align-items: center;
+      margin-top: 24px;
+    }
+
+    .dashboard-preview-copy {
+      padding: clamp(20px, 3vw, 28px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .dashboard-preview-copy p {
+      font-size: 0.98rem;
+    }
+
+    .feature-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0 22px;
+    }
+
+    .feature-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 6px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .dashboard-preview-note {
+      margin-top: 14px;
+      color: var(--quiet);
+      font-size: 0.86rem;
+      font-weight: 600;
+    }
+
     .dashboard-actions {
       display: none;
       justify-content: center;
@@ -613,6 +660,7 @@
 
       .hero-grid,
       .section-head,
+      .dashboard-preview-grid,
       .summary-grid,
       .references {
         grid-template-columns: 1fr;
@@ -684,13 +732,10 @@
       }
 
       .dashboard-actions {
-        display: none;
+        display: flex;
       }
 
-      .dashboard-mobile-panel {
-        display: block;
-      }
-
+      .dashboard-mobile-panel,
       .dashboard-frame {
         display: none;
       }
@@ -921,18 +966,30 @@
               This dashboard combines a global infant mortality map with a health transition scatter plot. Users can filter by country, region, year, and sex category to examine how infant mortality rates decline over time.
             </p>
           </div>
-          <div class="dashboard-actions">
-            <a class="dashboard-link" href="https://cds-301-birthrate.onrender.com" target="_blank" rel="noopener" data-i18n="openDashboard">Open dashboard</a>
-          </div>
-          <div class="dashboard-mobile-panel">
-            <p data-i18n="dash1Mobile">This interactive dashboard works best in a full browser view on phones.</p>
-            <a class="dashboard-link" href="https://cds-301-birthrate.onrender.com" target="_blank" rel="noopener" data-i18n="openDashboard">Open dashboard</a>
-          </div>
-          <div class="dashboard-frame dashboard-large">
-            <iframe title="Infant Mortality Dash App" src="https://cds-301-birthrate.onrender.com"></iframe>
+
+          <div class="dashboard-preview-grid">
+            <figure class="figure dashboard-preview-figure">
+              <div class="figure-bar">
+                <span data-i18n="dash1Frame">Dashboard Preview</span>
+                <span class="figure-source" data-i18n="figureSourceWdi">World Bank WDI</span>
+              </div>
+              <img src="./static/images/infant_dashboard_preview.png" alt="Static preview of the infant mortality dashboard">
+              <figcaption data-i18n="dash1Caption">Static preview of the full interactive dashboard.</figcaption>
+            </figure>
+
+            <div class="dashboard-preview-copy">
+              <p data-i18n="dash1PreviewText">The website shows a readable static preview for accessibility. Open the full dashboard to use filters, country search, year animation, and the health transition scatter plot.</p>
+              <div class="feature-chips" aria-label="Dashboard features">
+                <span class="feature-chip" data-i18n="featureCountrySearch">Country search</span>
+                <span class="feature-chip" data-i18n="featureYearAnimation">Year animation</span>
+                <span class="feature-chip" data-i18n="featureSexCompare">Sex comparison</span>
+                <span class="feature-chip" data-i18n="featureRegionFilter">Region filtering</span>
+              </div>
+              <a class="dashboard-link" href="https://cds-301-birthrate.onrender.com" target="_blank" rel="noopener" data-i18n="openFullDashboard">Open Full Interactive Dashboard</a>
+              <p class="dashboard-preview-note" data-i18n="dash1Note">The full version opens separately so the controls and chart have enough room on phones.</p>
+            </div>
           </div>
           <p class="dashboard-source" data-i18n="dash1Source">Source: World Bank World Development Indicators, 1960-2024.</p>
-          <p class="dashboard-note" data-i18n="dash1Note">If the dashboard loads slowly, wait a few moments for the hosted app to wake up.</p>
         </div>
 
         <div class="dashboard-block">
@@ -942,18 +999,31 @@
               This visualization isolates the male-female infant mortality gap across countries and over time. Positive values indicate higher male infant mortality, while negative values indicate higher female infant mortality.
             </p>
           </div>
-          <div class="dashboard-actions">
-            <a class="dashboard-link" href="./static/dashboards/MaleVFemale.html" target="_blank" rel="noopener" data-i18n="openDashboard">Open dashboard</a>
-          </div>
-          <div class="dashboard-mobile-panel">
-            <p data-i18n="dash2Mobile">Open the dashboard directly for the clearest mobile view.</p>
-            <a class="dashboard-link" href="./static/dashboards/MaleVFemale.html" target="_blank" rel="noopener" data-i18n="openDashboard">Open dashboard</a>
-          </div>
-          <div class="dashboard-frame dashboard-medium">
-            <iframe title="Male Female Infant Mortality Gap" src="./static/dashboards/MaleVFemale.html"></iframe>
+
+          <div class="dashboard-preview-grid">
+            <figure class="figure dashboard-preview-figure">
+              <div class="figure-bar">
+                <span data-i18n="dash2Frame">Standalone Plotly View</span>
+                <span class="figure-source" data-i18n="figureSourceWdi">World Bank WDI</span>
+              </div>
+              <div class="dashboard-frame dashboard-medium">
+                <iframe title="Male Female Infant Mortality Gap" src="./static/dashboards/MaleVFemale.html"></iframe>
+              </div>
+              <figcaption data-i18n="dash2Caption">Embedded standalone Plotly view. Open it directly for the clearest full-screen version.</figcaption>
+            </figure>
+
+            <div class="dashboard-preview-copy">
+              <p data-i18n="dash2PreviewText">This chart can run as a standalone Plotly file, so it remains available on the website while still offering a direct full-screen view.</p>
+              <div class="feature-chips" aria-label="Dashboard features">
+                <span class="feature-chip" data-i18n="featureAnimation">Animated years</span>
+                <span class="feature-chip" data-i18n="featureTooltip">Tooltips</span>
+                <span class="feature-chip" data-i18n="featureZoomPan">Zoom and pan</span>
+              </div>
+              <a class="dashboard-link" href="./static/dashboards/MaleVFemale.html" target="_blank" rel="noopener" data-i18n="openStandaloneChart">Open Standalone Chart</a>
+              <p class="dashboard-preview-note" data-i18n="dash2Note">This view is static-hosted and does not require the Dash server.</p>
+            </div>
           </div>
           <p class="dashboard-source" data-i18n="dash2Source">Source: World Bank World Development Indicators, 1960-2024.</p>
-          <p class="dashboard-note" data-i18n="dash2Note">Interactive dashboard built with Python and web-based visualization tools.</p>
         </div>
 
         <div class="container">
@@ -1078,14 +1148,29 @@
         dash1Title: "Infant Mortality and Health Transition Explorer",
         dash1Intro: "This dashboard combines a global infant mortality map with a health transition scatter plot. Users can filter by country, region, year, and sex category to examine how infant mortality rates decline over time.",
         openDashboard: "Open dashboard",
+        openFullDashboard: "Open Full Interactive Dashboard",
+        openStandaloneChart: "Open Standalone Chart",
         dash1Mobile: "This interactive dashboard works best in a full browser view on phones.",
+        dash1Frame: "Dashboard Preview",
+        dash1Caption: "Static preview of the full interactive dashboard.",
+        dash1PreviewText: "The website shows a readable static preview for accessibility. Open the full dashboard to use filters, country search, year animation, and the health transition scatter plot.",
+        featureCountrySearch: "Country search",
+        featureYearAnimation: "Year animation",
+        featureSexCompare: "Sex comparison",
+        featureRegionFilter: "Region filtering",
         dash1Source: "Source: World Bank World Development Indicators, 1960-2024.",
-        dash1Note: "If the dashboard loads slowly, wait a few moments for the hosted app to wake up.",
+        dash1Note: "The full version opens separately so the controls and chart have enough room on phones.",
         dash2Title: "Male-Female Infant Mortality Gap",
         dash2Intro: "This visualization isolates the male-female infant mortality gap across countries and over time. Positive values indicate higher male infant mortality, while negative values indicate higher female infant mortality.",
         dash2Mobile: "Open the dashboard directly for the clearest mobile view.",
+        dash2Frame: "Standalone Plotly View",
+        dash2Caption: "Embedded standalone Plotly view. Open it directly for the clearest full-screen version.",
+        dash2PreviewText: "This chart can run as a standalone Plotly file, so it remains available on the website while still offering a direct full-screen view.",
+        featureAnimation: "Animated years",
+        featureTooltip: "Tooltips",
+        featureZoomPan: "Zoom and pan",
         dash2Source: "Source: World Bank World Development Indicators, 1960-2024.",
-        dash2Note: "Interactive dashboard built with Python and web-based visualization tools.",
+        dash2Note: "This view is static-hosted and does not require the Dash server.",
         summary1Title: "Health transition",
         summary1Text: "Most countries experienced substantial declines in infant mortality between 1960 and 2024.",
         summary2Title: "Uneven progress",
@@ -1151,14 +1236,29 @@
         dash1Title: "영아 사망률 및 보건 전환 탐색기",
         dash1Intro: "이 대시보드는 세계 영아 사망률 지도와 보건 전환 산점도를 결합합니다. 사용자는 국가, 지역, 연도, 성별 범주를 필터링하여 영아 사망률이 시간에 따라 어떻게 감소하는지 살펴볼 수 있습니다.",
         openDashboard: "대시보드 열기",
+        openFullDashboard: "전체 인터랙티브 대시보드 열기",
+        openStandaloneChart: "독립형 차트 열기",
         dash1Mobile: "휴대폰에서는 대시보드를 전체 브라우저 화면으로 여는 것이 가장 보기 좋습니다.",
+        dash1Frame: "대시보드 미리보기",
+        dash1Caption: "전체 인터랙티브 대시보드의 정적 미리보기입니다.",
+        dash1PreviewText: "웹사이트에는 접근성과 가독성을 위해 정적 미리보기를 제공합니다. 전체 대시보드에서는 필터, 국가 검색, 연도 애니메이션, 보건 전환 산점도를 사용할 수 있습니다.",
+        featureCountrySearch: "국가 검색",
+        featureYearAnimation: "연도 애니메이션",
+        featureSexCompare: "성별 비교",
+        featureRegionFilter: "지역 필터",
         dash1Source: "출처: 세계은행 세계개발지표, 1960-2024.",
-        dash1Note: "로딩이 느리면 호스팅 앱이 켜질 때까지 잠시 기다려 주세요.",
+        dash1Note: "전체 버전은 휴대폰에서도 조작 공간을 확보할 수 있도록 별도 화면에서 열립니다.",
         dash2Title: "남아-여아 영아 사망률 격차",
         dash2Intro: "이 시각화는 국가와 시간에 따른 남아-여아 영아 사망률 격차를 분리하여 보여줍니다. 양수는 남아 영아 사망률이 더 높음을, 음수는 여아 영아 사망률이 더 높음을 의미합니다.",
         dash2Mobile: "가장 선명한 모바일 화면을 위해 대시보드를 직접 열어 보세요.",
+        dash2Frame: "독립형 Plotly 보기",
+        dash2Caption: "웹사이트에 포함된 독립형 Plotly 보기입니다. 가장 선명한 전체 화면은 직접 열어 확인할 수 있습니다.",
+        dash2PreviewText: "이 차트는 독립형 Plotly 파일로 실행되므로 Dash 서버 없이도 웹사이트에서 확인할 수 있습니다.",
+        featureAnimation: "연도 애니메이션",
+        featureTooltip: "툴팁",
+        featureZoomPan: "확대 및 이동",
         dash2Source: "출처: 세계은행 세계개발지표, 1960-2024.",
-        dash2Note: "Python 및 웹 기반 시각화 도구로 제작한 인터랙티브 대시보드입니다.",
+        dash2Note: "이 보기는 정적 호스팅 방식이며 Dash 서버가 필요하지 않습니다.",
         summary1Title: "보건 전환",
         summary1Text: "1960년부터 2024년 사이 대부분의 국가는 영아 사망률이 크게 감소했습니다.",
         summary2Title: "불균등한 진전",

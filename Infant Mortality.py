@@ -4,6 +4,26 @@ import plotly.express as px
 import plotly.graph_objects as go
 from dash import Dash, dcc, html, Input, Output, State, callback_context
 
+SMALL_COUNTRY_COORDS = {
+    "AND": {"lat": 42.5063, "lon": 1.5218},
+    "BHR": {"lat": 26.0667, "lon": 50.5577},
+    "LIE": {"lat": 47.1660, "lon": 9.5554},
+    "MCO": {"lat": 43.7384, "lon": 7.4246},
+    "MLT": {"lat": 35.9375, "lon": 14.3754},
+    "MDV": {"lat": 3.2028, "lon": 73.2207},
+    "SMR": {"lat": 43.9424, "lon": 12.4578},
+    "SGP": {"lat": 1.3521, "lon": 103.8198},
+}
+
+
+def fill_small_country_coords(frame):
+    frame = frame.copy()
+    for code, coords in SMALL_COUNTRY_COORDS.items():
+        mask = frame["Country Code"].eq(code)
+        frame.loc[mask & frame["lat"].isna(), "lat"] = coords["lat"]
+        frame.loc[mask & frame["lon"].isna(), "lon"] = coords["lon"]
+    return frame
+
 # =========================
 # LOAD DATA
 # =========================
@@ -67,11 +87,28 @@ centroids = world[["ADM0_A3", "lat", "lon"]].rename(
 )
 
 df = df.merge(centroids, on="Country Code", how="left")
+df = fill_small_country_coords(df)
+
+country_lookup = (
+    df[df["lat"].notna()][["Country Name", "Country Code"]]
+    .dropna()
+    .drop_duplicates()
+    .sort_values("Country Name")
+)
 
 country_options = [
-    {"label": country, "value": country}
-    for country in sorted(df["Country Name"].unique())
+    {
+        "label": f"{row['Country Name']} ({row['Country Code']})",
+        "value": row["Country Name"],
+        "search": f"{row['Country Name']} {row['Country Code']}"
+    }
+    for _, row in country_lookup.iterrows()
 ]
+
+country_list_text = ", ".join(
+    f"{row['Country Name']} ({row['Country Code']})"
+    for _, row in country_lookup.iterrows()
+)
 
 # =========================
 # COLOR SCALE
@@ -142,10 +179,42 @@ app.layout = html.Div(
                         dcc.Dropdown(
                             id="country-search",
                             options=country_options,
-                            placeholder="Type country...",
+                            placeholder="Type country or code, e.g. Singapore or SGP...",
                             clearable=True,
                             searchable=True,
+                            optionHeight=42,
                             style={"marginTop": "6px"}
+                        ),
+
+                        html.Details(
+                            style={
+                                "marginTop": "10px",
+                                "fontSize": "12px",
+                                "color": "#6f6b64",
+                                "lineHeight": "1.45"
+                            },
+                            children=[
+                                html.Summary(
+                                    f"Show available countries ({len(country_options)})",
+                                    style={
+                                        "cursor": "pointer",
+                                        "fontWeight": "800",
+                                        "color": "#104d43"
+                                    }
+                                ),
+                                html.Div(
+                                    country_list_text,
+                                    style={
+                                        "maxHeight": "150px",
+                                        "overflowY": "auto",
+                                        "marginTop": "8px",
+                                        "padding": "10px",
+                                        "border": "1px solid #ded8ce",
+                                        "borderRadius": "12px",
+                                        "backgroundColor": "#f7f5f0"
+                                    }
+                                )
+                            ]
                         ),
 
                         html.Div(
@@ -474,13 +543,30 @@ def update_map(
                     lat=[selected_lat],
                     mode="markers",
                     marker=dict(
-                        size=18,
+                        size=22,
                         color="#fffdfa",
-                        line=dict(width=2.5, color="#181716"),
+                        line=dict(width=3, color="#181716"),
                         symbol="circle"
                     ),
                     hoverinfo="skip",
                     name="Selected country halo",
+                    showlegend=False
+                )
+            )
+
+            fig.add_trace(
+                go.Scattergeo(
+                    lon=[selected_lon],
+                    lat=[selected_lat],
+                    mode="text",
+                    text=[selected_country],
+                    textposition="middle right",
+                    textfont=dict(
+                        size=18,
+                        color="#181716",
+                        family="Inter, Arial, sans-serif"
+                    ),
+                    hoverinfo="skip",
                     showlegend=False
                 )
             )
@@ -498,10 +584,10 @@ def update_map(
                         family="Inter, Arial, sans-serif"
                     ),
                     marker=dict(
-                        size=10,
+                        size=11,
                         color="#176b5c",
                         line=dict(
-                            width=1.5,
+                            width=2,
                             color="#fffdfa"
                         ),
                         symbol="circle"

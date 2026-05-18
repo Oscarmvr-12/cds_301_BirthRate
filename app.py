@@ -22,6 +22,26 @@ COLORS = {
 
 FONT_STACK = 'Inter, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
 
+SMALL_COUNTRY_COORDS = {
+    "AND": {"lat": 42.5063, "lon": 1.5218},
+    "BHR": {"lat": 26.0667, "lon": 50.5577},
+    "LIE": {"lat": 47.1660, "lon": 9.5554},
+    "MCO": {"lat": 43.7384, "lon": 7.4246},
+    "MLT": {"lat": 35.9375, "lon": 14.3754},
+    "MDV": {"lat": 3.2028, "lon": 73.2207},
+    "SMR": {"lat": 43.9424, "lon": 12.4578},
+    "SGP": {"lat": 1.3521, "lon": 103.8198},
+}
+
+
+def fill_small_country_coords(frame):
+    frame = frame.copy()
+    for code, coords in SMALL_COUNTRY_COORDS.items():
+        mask = frame["Country Code"].eq(code)
+        frame.loc[mask & frame["lat"].isna(), "lat"] = coords["lat"]
+        frame.loc[mask & frame["lon"].isna(), "lon"] = coords["lon"]
+    return frame
+
 APP_STYLE = {
     "fontFamily": FONT_STACK,
     "margin": "0",
@@ -222,11 +242,28 @@ infant_centroids = infant_world[["ADM0_A3", "lat", "lon"]].rename(
 )
 
 infant_df = infant_df.merge(infant_centroids, on="Country Code", how="left")
+infant_df = fill_small_country_coords(infant_df)
+
+infant_country_lookup = (
+    infant_df[infant_df["lat"].notna()][["Country Name", "Country Code"]]
+    .dropna()
+    .drop_duplicates()
+    .sort_values("Country Name")
+)
 
 infant_country_options = [
-    {"label": country, "value": country}
-    for country in sorted(infant_df["Country Name"].unique())
+    {
+        "label": f"{row['Country Name']} ({row['Country Code']})",
+        "value": row["Country Name"],
+        "search": f"{row['Country Name']} {row['Country Code']}"
+    }
+    for _, row in infant_country_lookup.iterrows()
 ]
+
+infant_country_list_text = ", ".join(
+    f"{row['Country Name']} ({row['Country Code']})"
+    for _, row in infant_country_lookup.iterrows()
+)
 
 # =========================
 # COLOR SCALE
@@ -437,10 +474,42 @@ infant_layout = html.Div(
                         dcc.Dropdown(
                             id="infant-country-search",
                             options=infant_country_options,
-                            placeholder="Type country...",
+                            placeholder="Type country or code, e.g. Singapore or SGP...",
                             clearable=True,
                             searchable=True,
+                            optionHeight=42,
                             style={"marginTop": "6px"}
+                        ),
+
+                        html.Details(
+                            style={
+                                "marginTop": "10px",
+                                "fontSize": "12px",
+                                "color": COLORS["muted"],
+                                "lineHeight": "1.45"
+                            },
+                            children=[
+                                html.Summary(
+                                    f"Show available countries ({len(infant_country_options)})",
+                                    style={
+                                        "cursor": "pointer",
+                                        "fontWeight": "800",
+                                        "color": COLORS["accent_dark"]
+                                    }
+                                ),
+                                html.Div(
+                                    infant_country_list_text,
+                                    style={
+                                        "maxHeight": "150px",
+                                        "overflowY": "auto",
+                                        "marginTop": "8px",
+                                        "padding": "10px",
+                                        "border": f'1px solid {COLORS["line"]}',
+                                        "borderRadius": "12px",
+                                        "backgroundColor": COLORS["paper"]
+                                    }
+                                )
+                            ]
                         ),
 
                         html.Div(
@@ -889,13 +958,30 @@ def update_infant_map(
                     lat=[selected_lat],
                     mode="markers",
                     marker=dict(
-                        size=18,
+                        size=22,
                         color=COLORS["surface"],
-                        line=dict(width=2.5, color=COLORS["ink"]),
+                        line=dict(width=3, color=COLORS["ink"]),
                         symbol="circle"
                     ),
                     hoverinfo="skip",
                     name="Selected country halo",
+                    showlegend=False
+                )
+            )
+
+            fig.add_trace(
+                go.Scattergeo(
+                    lon=[selected_lon],
+                    lat=[selected_lat],
+                    mode="text",
+                    text=[selected_country],
+                    textposition="middle right",
+                    textfont=dict(
+                        size=18,
+                        color=COLORS["ink"],
+                        family=FONT_STACK
+                    ),
+                    hoverinfo="skip",
                     showlegend=False
                 )
             )
@@ -913,10 +999,10 @@ def update_infant_map(
                         family=FONT_STACK
                     ),
                     marker=dict(
-                        size=10,
+                        size=11,
                         color=COLORS["accent"],
                         line=dict(
-                            width=1.5,
+                            width=2,
                             color=COLORS["surface"]
                         ),
                         symbol="circle"
