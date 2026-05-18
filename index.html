@@ -422,6 +422,30 @@
       margin-top: 24px;
     }
 
+    .dashboard-preview-stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .dashboard-preview-stack img,
+    .dashboard-full-preview img {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .dashboard-full-preview {
+      width: min(1180px, 100%);
+      margin: 24px auto 0;
+    }
+
+    .dashboard-full-preview img {
+      max-height: none;
+      object-fit: contain;
+    }
+
     .dashboard-preview-copy {
       padding: clamp(20px, 3vw, 28px);
       border: 1px solid var(--line);
@@ -973,8 +997,11 @@
                 <span data-i18n="dash1Frame">Dashboard Preview</span>
                 <span class="figure-source" data-i18n="figureSourceWdi">World Bank WDI</span>
               </div>
-              <img src="./static/images/infant_dashboard_preview.png" alt="Static preview of the infant mortality dashboard">
-              <figcaption data-i18n="dash1Caption">Static preview of the full interactive dashboard.</figcaption>
+              <div class="dashboard-preview-stack">
+                <img src="./static/images/dashboard_map_preview.png" alt="Static preview of the global infant mortality map dashboard">
+                <img src="./static/images/dashboard_scatter_preview.png" alt="Static preview of the health transition scatter dashboard">
+              </div>
+              <figcaption data-i18n="dash1Caption">Static previews of the map and health transition dashboard.</figcaption>
             </figure>
 
             <div class="dashboard-preview-copy">
@@ -1000,28 +1027,24 @@
             </p>
           </div>
 
-          <div class="dashboard-preview-grid">
-            <figure class="figure dashboard-preview-figure">
-              <div class="figure-bar">
-                <span data-i18n="dash2Frame">Standalone Plotly View</span>
-                <span class="figure-source" data-i18n="figureSourceWdi">World Bank WDI</span>
-              </div>
-              <div class="dashboard-frame dashboard-medium">
-                <iframe title="Male Female Infant Mortality Gap" src="./static/dashboards/MaleVFemale.html"></iframe>
-              </div>
-              <figcaption data-i18n="dash2Caption">Embedded standalone Plotly view. Open it directly for the clearest full-screen version.</figcaption>
-            </figure>
-
-            <div class="dashboard-preview-copy">
-              <p data-i18n="dash2PreviewText">This chart can run as a standalone Plotly file, so it remains available on the website while still offering a direct full-screen view.</p>
-              <div class="feature-chips" aria-label="Dashboard features">
-                <span class="feature-chip" data-i18n="featureAnimation">Animated years</span>
-                <span class="feature-chip" data-i18n="featureTooltip">Tooltips</span>
-                <span class="feature-chip" data-i18n="featureZoomPan">Zoom and pan</span>
-              </div>
-              <a class="dashboard-link" href="./static/dashboards/MaleVFemale.html" target="_blank" rel="noopener" data-i18n="openStandaloneChart">Open Standalone Chart</a>
-              <p class="dashboard-preview-note" data-i18n="dash2Note">This view is static-hosted and does not require the Dash server.</p>
+          <figure class="figure dashboard-full-preview">
+            <div class="figure-bar">
+              <span data-i18n="dash2Frame">Full Static Preview</span>
+              <span class="figure-source" data-i18n="figureSourceWdi">World Bank WDI</span>
             </div>
+            <img src="./static/images/male_female_full_preview.png" alt="Full static preview of the male-female infant mortality gap visualization">
+            <figcaption data-i18n="dash2Caption">Full-size static preview. Open the standalone chart for animation, tooltips, zoom, and pan.</figcaption>
+          </figure>
+
+          <div class="dashboard-preview-copy dashboard-full-preview">
+            <p data-i18n="dash2PreviewText">The website now shows the full chart preview without a cramped scroll frame. Open the standalone Plotly file when you want the interactive version.</p>
+            <div class="feature-chips" aria-label="Dashboard features">
+              <span class="feature-chip" data-i18n="featureAnimation">Animated years</span>
+              <span class="feature-chip" data-i18n="featureTooltip">Tooltips</span>
+              <span class="feature-chip" data-i18n="featureZoomPan">Zoom and pan</span>
+            </div>
+            <a class="dashboard-link" href="./static/dashboards/MaleVFemale.html" target="_blank" rel="noopener" data-i18n="openStandaloneChart">Open Standalone Chart</a>
+            <p class="dashboard-preview-note" data-i18n="dash2Note">This view is static-hosted and does not require the Dash server.</p>
           </div>
           <p class="dashboard-source" data-i18n="dash2Source">Source: World Bank World Development Indicators, 1960-2024.</p>
         </div>
@@ -1152,7 +1175,7 @@
         openStandaloneChart: "Open Standalone Chart",
         dash1Mobile: "This interactive dashboard works best in a full browser view on phones.",
         dash1Frame: "Dashboard Preview",
-        dash1Caption: "Static preview of the full interactive dashboard.",
+        dash1Caption: "Static previews of the map and health transition dashboard.",
         dash1PreviewText: "The website shows a readable static preview for accessibility. Open the full dashboard to use filters, country search, year animation, and the health transition scatter plot.",
         featureCountrySearch: "Country search",
         featureYearAnimation: "Year animation",
@@ -1163,9 +1186,9 @@
         dash2Title: "Male-Female Infant Mortality Gap",
         dash2Intro: "This visualization isolates the male-female infant mortality gap across countries and over time. Positive values indicate higher male infant mortality, while negative values indicate higher female infant mortality.",
         dash2Mobile: "Open the dashboard directly for the clearest mobile view.",
-        dash2Frame: "Standalone Plotly View",
-        dash2Caption: "Embedded standalone Plotly view. Open it directly for the clearest full-screen version.",
-        dash2PreviewText: "This chart can run as a standalone Plotly file, so it remains available on the website while still offering a direct full-screen view.",
+        dash2Frame: "Full Static Preview",
+        dash2Caption: "Full-size static preview. Open the standalone chart for animation, tooltips, zoom, and pan.",
+        dash2PreviewText: "The website now shows the full chart preview without a cramped scroll frame. Open the standalone Plotly file when you want the interactive version.",
         featureAnimation: "Animated years",
         featureTooltip: "Tooltips",
         featureZoomPan: "Zoom and pan",
@@ -1240,7 +1263,7 @@
         openStandaloneChart: "독립형 차트 열기",
         dash1Mobile: "휴대폰에서는 대시보드를 전체 브라우저 화면으로 여는 것이 가장 보기 좋습니다.",
         dash1Frame: "대시보드 미리보기",
-        dash1Caption: "전체 인터랙티브 대시보드의 정적 미리보기입니다.",
+        dash1Caption: "지도와 보건 전환 대시보드의 정적 미리보기입니다.",
         dash1PreviewText: "웹사이트에는 접근성과 가독성을 위해 정적 미리보기를 제공합니다. 전체 대시보드에서는 필터, 국가 검색, 연도 애니메이션, 보건 전환 산점도를 사용할 수 있습니다.",
         featureCountrySearch: "국가 검색",
         featureYearAnimation: "연도 애니메이션",
@@ -1251,9 +1274,9 @@
         dash2Title: "남아-여아 영아 사망률 격차",
         dash2Intro: "이 시각화는 국가와 시간에 따른 남아-여아 영아 사망률 격차를 분리하여 보여줍니다. 양수는 남아 영아 사망률이 더 높음을, 음수는 여아 영아 사망률이 더 높음을 의미합니다.",
         dash2Mobile: "가장 선명한 모바일 화면을 위해 대시보드를 직접 열어 보세요.",
-        dash2Frame: "독립형 Plotly 보기",
-        dash2Caption: "웹사이트에 포함된 독립형 Plotly 보기입니다. 가장 선명한 전체 화면은 직접 열어 확인할 수 있습니다.",
-        dash2PreviewText: "이 차트는 독립형 Plotly 파일로 실행되므로 Dash 서버 없이도 웹사이트에서 확인할 수 있습니다.",
+        dash2Frame: "전체 정적 미리보기",
+        dash2Caption: "전체 크기 정적 미리보기입니다. 애니메이션, 툴팁, 확대와 이동은 독립형 차트에서 사용할 수 있습니다.",
+        dash2PreviewText: "웹사이트에서는 좁은 스크롤 프레임 없이 전체 차트 미리보기를 보여줍니다. 상호작용이 필요할 때는 독립형 Plotly 파일을 열어 보세요.",
         featureAnimation: "연도 애니메이션",
         featureTooltip: "툴팁",
         featureZoomPan: "확대 및 이동",
