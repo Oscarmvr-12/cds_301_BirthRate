@@ -78,14 +78,13 @@ country_options = [
 # =========================
 
 color_scale = [
-    [0.0, "#1a237e"],
-    [0.12, "#1565c0"],
-    [0.28, "#29b6f6"],
-    [0.45, "#b3e5fc"],
-    [0.58, "#fff176"],
-    [0.72, "#ffb74d"],
-    [0.86, "#ff7043"],
-    [1.0, "#c62828"]
+    [0.0, "#f4efe6"],
+    [0.18, "#d9e7df"],
+    [0.36, "#9ec9bb"],
+    [0.56, "#4f9d8a"],
+    [0.74, "#176b5c"],
+    [0.9, "#8f4f43"],
+    [1.0, "#5f2f2a"]
 ]
 
 # =========================
@@ -95,7 +94,7 @@ color_scale = [
 app = Dash(__name__)
 
 app.layout = html.Div(
-    style={"fontFamily": "Arial", "margin": "0", "padding": "0"},
+    style={"fontFamily": "Inter, Arial, sans-serif", "margin": "0", "padding": "0", "backgroundColor": "#f7f5f0", "color": "#181716"},
     children=[
         html.Div(
             style={"display": "flex", "height": "100vh"},
@@ -108,7 +107,7 @@ app.layout = html.Div(
                     style={
                         "width": "340px",
                         "padding": "20px 22px",
-                        "borderRight": "1px solid #dddddd",
+                        "borderRight": "1px solid #ded8ce",
                         "boxSizing": "border-box",
                         "overflowY": "auto"
                     },
@@ -158,16 +157,16 @@ app.layout = html.Div(
                                 "marginTop": "18px",
                                 "marginBottom": "18px",
                                 "padding": "10px 12px",
-                                "backgroundColor": "#f7f7f7",
+                                "backgroundColor": "#e8f0ed",
                                 "borderRadius": "8px",
-                                "border": "1px solid #dddddd"
+                                "border": "1px solid #ded8ce"
                             }
                         ),
 
                         html.Hr(
                             style={
                                 "border": "none",
-                                "borderTop": "1px solid #bbbbbb",
+                                "borderTop": "1px solid #ded8ce",
                                 "margin": "18px 0"
                             }
                         ),
@@ -258,7 +257,7 @@ app.layout = html.Div(
                             style={
                                 "textAlign": "center",
                                 "fontSize": "13px",
-                                "color": "#666666",
+                                "color": "#918b82",
                                 "marginTop": "-8px",
                                 "marginBottom": "8px"
                             }
@@ -402,7 +401,9 @@ def update_map(
         fig.update_layout(
             title=f"{selected_indicator} Infant Mortality Rate ({selected_year})",
             title_x=0.5,
-            height=750
+            height=750,
+            paper_bgcolor="#fffdfa",
+            font=dict(family="Inter, Arial, sans-serif", color="#181716")
         )
 
     else:
@@ -429,7 +430,9 @@ def update_map(
         fig.update_layout(
             title=f"Infant Mortality Comparison ({selected_year})",
             title_x=0.5,
-            height=750
+            height=750,
+            paper_bgcolor="#fffdfa",
+            font=dict(family="Inter, Arial, sans-serif", color="#181716")
         )
 
     # =========================
@@ -474,15 +477,15 @@ def update_map(
                     textposition="middle right",
                     textfont=dict(
                         size=14,
-                        color="#111111",
-                        family="Arial Black"
+                        color="#181716",
+                        family="Inter, Arial, sans-serif"
                     ),
                     marker=dict(
                         size=11,
-                        color="#111111",
+                        color="#181716",
                         line=dict(
                             width=1.5,
-                            color="white"
+                            color="#fffdfa"
                         ),
                         symbol="circle"
                     ),
@@ -545,11 +548,11 @@ def update_map(
             projection_scale=3.5,
             showframe=False,
             showcoastlines=True,
-            coastlinecolor="#444444",
+            coastlinecolor="#6f6b64",
             showcountries=True,
-            countrycolor="#444444",
+            countrycolor="#ded8ce",
             showland=True,
-            landcolor="lightgray"
+            landcolor="#ece7de"
         )
     else:
         fig.update_geos(
@@ -557,11 +560,11 @@ def update_map(
             projection_scale=1,
             showframe=False,
             showcoastlines=True,
-            coastlinecolor="#444444",
+            coastlinecolor="#6f6b64",
             showcountries=True,
-            countrycolor="#444444",
+            countrycolor="#ded8ce",
             showland=True,
-            landcolor="lightgray"
+            landcolor="#ece7de"
         )
 
     return fig, country_info

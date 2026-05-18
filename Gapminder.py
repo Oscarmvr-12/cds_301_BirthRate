@@ -98,13 +98,13 @@ country_options = [
 ]
 
 region_colors = {
-    "Africa": "#E76F51",
-    "Asia": "#2A9D8F",
-    "Europe": "#457B9D",
-    "North America": "#8E44AD",
-    "South America": "#F4A261",
-    "Oceania": "#00A6D6",
-    "Other": "#999999"
+    "Africa": "#9f5f4f",
+    "Asia": "#176b5c",
+    "Europe": "#4d7188",
+    "North America": "#7c6a93",
+    "South America": "#aa7d2a",
+    "Oceania": "#4f9d8a",
+    "Other": "#918b82"
 }
 
 label_positions = [
@@ -118,7 +118,7 @@ app = Dash(__name__)
 server = app.server
 
 app.layout = html.Div(
-    style={"fontFamily": "Arial", "margin": "0", "padding": "0"},
+    style={"fontFamily": "Inter, Arial, sans-serif", "margin": "0", "padding": "0", "backgroundColor": "#f7f5f0", "color": "#181716"},
     children=[
         html.Div(
             style={"display": "flex", "height": "100vh"},
@@ -127,10 +127,10 @@ app.layout = html.Div(
                     style={
                         "width": "330px",
                         "padding": "20px",
-                        "borderRight": "1px solid #dddddd",
+                        "borderRight": "1px solid #ded8ce",
                         "boxSizing": "border-box",
                         "overflowY": "auto",
-                        "backgroundColor": "#f8f9fb"
+                        "backgroundColor": "#fffdfa"
                     },
                     children=[
                         html.Label("Regions", style={"fontWeight": "bold"}),
@@ -210,7 +210,7 @@ app.layout = html.Div(
                             style={
                                 "fontSize": "14px",
                                 "lineHeight": "1.4",
-                                "color": "#555555"
+                                "color": "#6f6b64"
                             }
                         )
                     ]
@@ -237,7 +237,7 @@ app.layout = html.Div(
                             style={
                                 "textAlign": "center",
                                 "fontSize": "15px",
-                                "color": "#555555",
+                                "color": "#6f6b64",
                                 "marginBottom": "5px"
                             }
                         ),
@@ -259,7 +259,7 @@ app.layout = html.Div(
                             style={
                                 "textAlign": "center",
                                 "fontSize": "12px",
-                                "color": "#666666",
+                                "color": "#918b82",
                                 "marginTop": "-8px"
                             }
                         )
@@ -348,9 +348,9 @@ def update_graph(selected_regions, selected_countries, selected_year):
                 name=region,
                 marker=dict(
                     size=region_data["total_mortality"].clip(lower=8, upper=160) / 3.8,
-                    color=region_colors.get(region, "#999999"),
+                    color=region_colors.get(region, "#918b82"),
                     opacity=0.38,
-                    line=dict(width=0.5, color="white")
+                    line=dict(width=0.5, color="#fffdfa")
                 ),
                 text=region_data["Country Name"],
                 customdata=region_data[
@@ -394,7 +394,7 @@ def update_graph(selected_regions, selected_countries, selected_year):
                 name=f"{country} trail",
                 line=dict(
                     width=1.8,
-                    color="rgba(90,90,90,0.55)"
+                    color="rgba(111,107,100,0.55)"
                 ),
                 opacity=0.45,
                 hoverinfo="skip",
@@ -416,14 +416,14 @@ def update_graph(selected_regions, selected_countries, selected_year):
                     textposition=label_position,
                     textfont=dict(
                         size=13,
-                        color="#111111",
-                        family="Arial Black"
+                        color="#181716",
+                        family="Inter, Arial, sans-serif"
                     ),
                     marker=dict(
                         size=22,
-                        color=region_colors.get(region, "#111111"),
+                        color=region_colors.get(region, "#181716"),
                         opacity=1.0,
-                        line=dict(width=2.2, color="black")
+                        line=dict(width=2.2, color="#181716")
                     ),
                     customdata=current_country[
                         ["male_mortality", "female_mortality", "region"]
@@ -441,7 +441,7 @@ def update_graph(selected_regions, selected_countries, selected_year):
     fig.add_hline(
         y=0,
         line_dash="dash",
-        line_color="#666666",
+        line_color="#918b82",
         line_width=1
     )
 
@@ -449,14 +449,14 @@ def update_graph(selected_regions, selected_countries, selected_year):
         title=f"Health Transition Scatter ({selected_year})",
         title_x=0.5,
         height=720,
-        plot_bgcolor="white",
-        paper_bgcolor="white",
+        plot_bgcolor="#fffdfa",
+        paper_bgcolor="#fffdfa",
 
         xaxis=dict(
             title="Total infant mortality, deaths per 1,000 live births",
-            range=[0, 35],
+            range=[0, 230],
             automargin=True,
-            gridcolor="#e6e6e6",
+            gridcolor="#ded8ce",
             zeroline=False
         ),
 
@@ -464,9 +464,9 @@ def update_graph(selected_regions, selected_countries, selected_year):
             title="Male − Female infant mortality gap",
             range=[-10, 35],
             automargin=True,
-            gridcolor="#e6e6e6",
+            gridcolor="#ded8ce",
             zeroline=True,
-            zerolinecolor="#555555"
+            zerolinecolor="#918b82"
         ),
 
         legend=dict(
@@ -481,7 +481,8 @@ def update_graph(selected_regions, selected_countries, selected_year):
             easing="cubic-in-out"
         ),
 
-        margin=dict(l=80, r=230, t=70, b=45)
+        font=dict(family="Inter, Arial, sans-serif", color="#181716"),
+        margin=dict(l=80, r=210, t=70, b=48)
     )
 
     return fig

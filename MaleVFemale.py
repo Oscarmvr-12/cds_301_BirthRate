@@ -63,11 +63,11 @@ fig = px.choropleth(
     animation_frame="year",
     animation_group="Country Name",
     color_continuous_scale=[
-        [0.0, "#2166ac"],
-        [0.25, "#67a9cf"],
-        [0.5, "#f7f7f7"],
-        [0.75, "#ef8a62"],
-        [1.0, "#b2182b"]
+        [0.0, "#4d7188"],
+        [0.25, "#a9c6cf"],
+        [0.5, "#fffdfa"],
+        [0.75, "#d7a08f"],
+        [1.0, "#9f5f4f"]
     ],
     range_color=(-15, 15),
     projection="natural earth",
@@ -91,6 +91,8 @@ fig.update_layout(
     title_x=0.5,
     height=740,
     margin=dict(l=10, r=10, t=70, b=10),
+    paper_bgcolor="#fffdfa",
+    font=dict(family="Inter, Arial, sans-serif", color="#181716"),
     coloraxis_colorbar=dict(
         title="Male − Female<br>deaths per 1,000",
         tickvals=[-15, -10, -5, 0, 5, 10, 15],
@@ -109,11 +111,11 @@ fig.update_layout(
 fig.update_geos(
     showframe=False,
     showcoastlines=True,
-    coastlinecolor="#444444",
+    coastlinecolor="#6f6b64",
     showcountries=True,
-    countrycolor="#444444",
+    countrycolor="#ded8ce",
     showland=True,
-    landcolor="lightgray"
+    landcolor="#ece7de"
 )
 
 os.makedirs("static/dashboards", exist_ok=True)

@@ -5,6 +5,161 @@ import plotly.graph_objects as go
 from dash import Dash, dcc, html, Input, Output, State, callback_context
 
 # =========================
+# VISUAL SYSTEM
+# =========================
+
+COLORS = {
+    "ink": "#181716",
+    "muted": "#6f6b64",
+    "quiet": "#918b82",
+    "line": "#ded8ce",
+    "paper": "#f7f5f0",
+    "surface": "#fffdfa",
+    "accent": "#176b5c",
+    "accent_dark": "#104d43",
+    "accent_soft": "#e8f0ed",
+}
+
+FONT_STACK = 'Inter, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif'
+
+APP_STYLE = {
+    "fontFamily": FONT_STACK,
+    "margin": "0",
+    "padding": "0",
+    "backgroundColor": COLORS["paper"],
+    "color": COLORS["ink"],
+}
+
+SHELL_STYLE = {
+    "display": "flex",
+    "height": "100vh",
+    "backgroundColor": COLORS["paper"],
+}
+
+SIDEBAR_STYLE = {
+    "width": "340px",
+    "padding": "22px",
+    "borderRight": f'1px solid {COLORS["line"]}',
+    "boxSizing": "border-box",
+    "overflowY": "auto",
+    "backgroundColor": COLORS["surface"],
+}
+
+MAIN_STYLE = {
+    "flex": "1",
+    "padding": "14px 22px",
+    "boxSizing": "border-box",
+    "backgroundColor": COLORS["paper"],
+}
+
+LABEL_STYLE = {
+    "fontWeight": "800",
+    "fontSize": "13px",
+    "letterSpacing": "0.08em",
+    "textTransform": "uppercase",
+    "color": COLORS["accent_dark"],
+}
+
+BUTTON_STYLE = {
+    "width": "100%",
+    "padding": "11px 14px",
+    "border": f'1px solid {COLORS["line"]}',
+    "borderRadius": "999px",
+    "backgroundColor": COLORS["accent_dark"],
+    "color": "#fffdfa",
+    "fontSize": "14px",
+    "fontWeight": "800",
+    "cursor": "pointer",
+}
+
+INFO_BOX_STYLE = {
+    "fontSize": "14px",
+    "fontWeight": "700",
+    "lineHeight": "1.45",
+    "marginTop": "18px",
+    "marginBottom": "18px",
+    "padding": "12px 14px",
+    "backgroundColor": COLORS["accent_soft"],
+    "borderRadius": "14px",
+    "border": f'1px solid {COLORS["line"]}',
+    "color": COLORS["accent_dark"],
+}
+
+TITLE_STYLE = {
+    "textAlign": "center",
+    "margin": "8px 0 4px 0",
+    "fontSize": "clamp(22px, 3vw, 32px)",
+    "fontWeight": "800",
+    "letterSpacing": "0",
+    "color": COLORS["ink"],
+}
+
+SUBTITLE_STYLE = {
+    "textAlign": "center",
+    "fontSize": "14px",
+    "color": COLORS["muted"],
+    "marginBottom": "8px",
+}
+
+SOURCE_STYLE = {
+    "textAlign": "center",
+    "fontSize": "12px",
+    "color": COLORS["quiet"],
+    "marginTop": "-8px",
+    "marginBottom": "8px",
+    "fontWeight": "600",
+}
+
+DASH_CSS = f"""
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap');
+body {{
+  margin: 0;
+  background: {COLORS['paper']};
+  color: {COLORS['ink']};
+  font-family: {FONT_STACK};
+}}
+.dash-tabs .tab {{
+  background: {COLORS['paper']} !important;
+  border-color: {COLORS['line']} !important;
+  color: {COLORS['muted']} !important;
+  font-weight: 700;
+}}
+.dash-tabs .tab--selected {{
+  background: {COLORS['surface']} !important;
+  border-top: 3px solid {COLORS['accent']} !important;
+  color: {COLORS['ink']} !important;
+}}
+.Select-control, .Select-menu-outer {{
+  border-color: {COLORS['line']} !important;
+  border-radius: 12px !important;
+}}
+.rc-slider-track {{ background-color: {COLORS['accent']} !important; }}
+.rc-slider-handle {{
+  border-color: {COLORS['accent']} !important;
+  background-color: {COLORS['surface']} !important;
+}}
+@media (max-width: 760px) {{
+  .dashboard-shell {{
+    display: block !important;
+    height: auto !important;
+    min-height: 100vh;
+  }}
+  .dashboard-sidebar {{
+    width: 100% !important;
+    border-right: 0 !important;
+    border-bottom: 1px solid {COLORS['line']} !important;
+  }}
+  .dashboard-main {{
+    padding: 12px !important;
+  }}
+  .dashboard-graph {{
+    height: 68vh !important;
+    min-height: 520px;
+  }}
+}}
+"""
+
+# =========================
 # LOAD DATA
 # =========================
 
@@ -78,14 +233,13 @@ infant_country_options = [
 # =========================
 
 infant_color_scale = [
-    [0.0, "#1a237e"],
-    [0.12, "#1565c0"],
-    [0.28, "#29b6f6"],
-    [0.45, "#b3e5fc"],
-    [0.58, "#fff176"],
-    [0.72, "#ffb74d"],
-    [0.86, "#ff7043"],
-    [1.0, "#c62828"]
+    [0.0, "#f4efe6"],
+    [0.18, "#d9e7df"],
+    [0.36, "#9ec9bb"],
+    [0.56, "#4f9d8a"],
+    [0.74, "#176b5c"],
+    [0.9, "#8f4f43"],
+    [1.0, "#5f2f2a"]
 ]
 
 # =========================
@@ -195,13 +349,13 @@ transition_country_options = [
 ]
 
 transition_region_colors = {
-    "Africa": "#E76F51",
-    "Asia": "#2A9D8F",
-    "Europe": "#457B9D",
-    "North America": "#8E44AD",
-    "South America": "#F4A261",
-    "Oceania": "#00A6D6",
-    "Other": "#999999"
+    "Africa": "#9f5f4f",
+    "Asia": "#176b5c",
+    "Europe": "#4d7188",
+    "North America": "#7c6a93",
+    "South America": "#aa7d2a",
+    "Oceania": "#4f9d8a",
+    "Other": "#918b82"
 }
 
 # =========================
@@ -210,29 +364,45 @@ transition_region_colors = {
 
 app = Dash(__name__)
 server = app.server
+app.index_string = """
+<!DOCTYPE html>
+<html>
+  <head>
+    {%metas%}
+    <title>{%title%}</title>
+    {%favicon%}
+    {%css%}
+    <style>
+    {DASH_CSS}
+    </style>
+  </head>
+  <body>
+    {%app_entry%}
+    <footer>
+      {%config%}
+      {%scripts%}
+      {%renderer%}
+    </footer>
+  </body>
+</html>
+""".replace("{DASH_CSS}", DASH_CSS)
 
 infant_layout = html.Div(
-    style={"fontFamily": "Arial", "margin": "0", "padding": "0"},
+    style=APP_STYLE,
     children=[
         html.Div(
-            style={"display": "flex", "height": "100vh"},
+            className="dashboard-shell", style=SHELL_STYLE,
             children=[
                 # =========================
                 # LEFT SIDEBAR
                 # =========================
 
                 html.Div(
-                    style={
-                        "width": "340px",
-                        "padding": "20px 22px",
-                        "borderRight": "1px solid #dddddd",
-                        "boxSizing": "border-box",
-                        "overflowY": "auto"
-                    },
+                    className="dashboard-sidebar", style=SIDEBAR_STYLE,
                     children=[
                         html.Label(
                             "Indicators",
-                            style={"fontWeight": "bold", "fontSize": "17px"}
+                            style=LABEL_STYLE
                         ),
 
                         dcc.Checklist(
@@ -254,7 +424,7 @@ infant_layout = html.Div(
 
                         html.Label(
                             "Search Country",
-                            style={"fontWeight": "bold", "fontSize": "17px"}
+                            style=LABEL_STYLE
                         ),
 
                         dcc.Dropdown(
@@ -268,30 +438,20 @@ infant_layout = html.Div(
 
                         html.Div(
                             id="infant-country-info",
-                            style={
-                                "fontSize": "15px",
-                                "fontWeight": "bold",
-                                "lineHeight": "1.45",
-                                "marginTop": "18px",
-                                "marginBottom": "18px",
-                                "padding": "10px 12px",
-                                "backgroundColor": "#f7f7f7",
-                                "borderRadius": "8px",
-                                "border": "1px solid #dddddd"
-                            }
+                            style=INFO_BOX_STYLE
                         ),
 
                         html.Hr(
                             style={
                                 "border": "none",
-                                "borderTop": "1px solid #bbbbbb",
+                                "borderTop": "1px solid #ded8ce",
                                 "margin": "18px 0"
                             }
                         ),
 
                         html.Label(
                             "Year",
-                            style={"fontWeight": "bold", "fontSize": "17px"}
+                            style=LABEL_STYLE
                         ),
 
                         html.Div(
@@ -327,12 +487,7 @@ infant_layout = html.Div(
                             "Play / Pause",
                             id="infant-play-button",
                             n_clicks=0,
-                            style={
-                                "width": "100%",
-                                "padding": "10px",
-                                "marginTop": "20px",
-                                "fontSize": "15px"
-                            }
+                            style={**BUTTON_STYLE, "marginTop": "20px"}
                         )
                     ]
                 ),
@@ -342,20 +497,11 @@ infant_layout = html.Div(
                 # =========================
 
                 html.Div(
-                    style={
-                        "flex": "1",
-                        "padding": "0 10px",
-                        "boxSizing": "border-box"
-                    },
+                    className="dashboard-main", style=MAIN_STYLE,
                     children=[
                         html.H1(
                             "Global Infant Mortality Trends by Year and Sex",
-                            style={
-                                "textAlign": "center",
-                                "margin": "12px 0 5px 0",
-                                "fontSize": "34px",
-                                "fontWeight": "bold"
-                            }
+                            style=TITLE_STYLE
                         ),
 
                         dcc.Interval(
@@ -367,18 +513,12 @@ infant_layout = html.Div(
 
                         dcc.Graph(
                             id="infant-map-graph",
-                            style={"height": "calc(100vh - 95px)"}
+                            className="dashboard-graph", style={"height": "calc(100vh - 112px)"}
                         ),
 
                         html.Div(
                             "Source: World Bank, World Development Indicators",
-                            style={
-                                "textAlign": "center",
-                                "fontSize": "13px",
-                                "color": "#666666",
-                                "marginTop": "-8px",
-                                "marginBottom": "8px"
-                            }
+                            style=SOURCE_STYLE
                         )
                     ]
                 )
@@ -388,25 +528,19 @@ infant_layout = html.Div(
 )
 
 transition_layout = html.Div(
-    style={"fontFamily": "Arial", "margin": "0", "padding": "0"},
+    style=APP_STYLE,
     children=[
         html.Div(
-            style={"display": "flex", "height": "100vh"},
+            className="dashboard-shell", style=SHELL_STYLE,
             children=[
                 # =========================
                 # SIDEBAR
                 # =========================
 
                 html.Div(
-                    style={
-                        "width": "330px",
-                        "padding": "20px",
-                        "borderRight": "1px solid #dddddd",
-                        "boxSizing": "border-box",
-                        "overflowY": "auto"
-                    },
+                    className="dashboard-sidebar", style=SIDEBAR_STYLE,
                     children=[
-                        html.Label("Regions", style={"fontWeight": "bold"}),
+                        html.Label("Regions", style=LABEL_STYLE),
 
                         dcc.Dropdown(
                             id="transition-region-dropdown",
@@ -420,7 +554,7 @@ transition_layout = html.Div(
 
                         html.Br(),
 
-                        html.Label("Highlight Countries", style={"fontWeight": "bold"}),
+                        html.Label("Highlight Countries", style=LABEL_STYLE),
 
                         dcc.Dropdown(
                             id="transition-country-dropdown",
@@ -442,7 +576,7 @@ transition_layout = html.Div(
 
                         html.Br(),
 
-                        html.Label("Year", style={"fontWeight": "bold"}),
+                        html.Label("Year", style=LABEL_STYLE),
 
                         dcc.Slider(
                             id="transition-year-slider",
@@ -468,22 +602,14 @@ transition_layout = html.Div(
                             "Play / Pause",
                             id="transition-play-button",
                             n_clicks=0,
-                            style={
-                                "width": "100%",
-                                "padding": "10px",
-                                "fontSize": "15px"
-                            }
+                            style=BUTTON_STYLE
                         ),
 
                         html.Hr(),
 
                         html.Div(
                             "This chart shows how countries move as infant mortality declines and the transition_male–transition_female mortality gap changes.",
-                            style={
-                                "fontSize": "14px",
-                                "lineHeight": "1.4",
-                                "color": "#555555"
-                            }
+                            style={"fontSize": "14px", "lineHeight": "1.45", "color": COLORS["muted"]}
                         )
                     ]
                 ),
@@ -493,29 +619,16 @@ transition_layout = html.Div(
                 # =========================
 
                 html.Div(
-                    style={
-                        "flex": "1",
-                        "padding": "10px 20px",
-                        "boxSizing": "border-box"
-                    },
+                    className="dashboard-main", style=MAIN_STYLE,
                     children=[
                         html.H1(
                             "Global Health Transition and Sex-Based Infant Mortality Inequality",
-                            style={
-                                "textAlign": "center",
-                                "fontSize": "28px",
-                                "margin": "10px 0 0 0"
-                            }
+                            style=TITLE_STYLE
                         ),
 
                         html.Div(
                             "How does sex disparity behave as infant mortality changes?",
-                            style={
-                                "textAlign": "center",
-                                "fontSize": "15px",
-                                "color": "#555555",
-                                "marginBottom": "5px"
-                            }
+                            style=SUBTITLE_STYLE
                         ),
 
                         dcc.Interval(
@@ -527,17 +640,12 @@ transition_layout = html.Div(
 
                         dcc.Graph(
                             id="transition-graph",
-                            style={"height": "calc(100vh - 115px)"}
+                            className="dashboard-graph", style={"height": "calc(100vh - 132px)"}
                         ),
 
                         html.Div(
                             "Source: World Bank, World Development Indicators",
-                            style={
-                                "textAlign": "center",
-                                "fontSize": "12px",
-                                "color": "#666666",
-                                "marginTop": "-8px"
-                            }
+                            style=SOURCE_STYLE
                         )
                     ]
                 )
@@ -547,10 +655,11 @@ transition_layout = html.Div(
 )
 
 app.layout = html.Div(
-    style={"fontFamily": "Arial", "margin": "0", "padding": "0"},
+    style=APP_STYLE,
     children=[
         dcc.Tabs(
             id="main-tabs",
+            className="dash-tabs",
             value="infant-mortality-map",
             children=[
                 dcc.Tab(
@@ -772,15 +881,15 @@ def update_infant_map(
                     textposition="middle right",
                     textfont=dict(
                         size=14,
-                        color="#111111",
-                        family="Arial Black"
+                        color=COLORS["ink"],
+                        family=FONT_STACK
                     ),
                     marker=dict(
                         size=11,
-                        color="#111111",
+                        color=COLORS["ink"],
                         line=dict(
                             width=1.5,
-                            color="white"
+                            color=COLORS["surface"]
                         ),
                         symbol="circle"
                     ),
@@ -825,6 +934,7 @@ def update_infant_map(
             thickness=58
         ),
         annotations=existing_annotations,
+        font=dict(family=FONT_STACK, color=COLORS["ink"]),
         margin=dict(
             l=10,
             r=110,
@@ -843,11 +953,11 @@ def update_infant_map(
             projection_scale=3.5,
             showframe=False,
             showcoastlines=True,
-            coastlinecolor="#444444",
+            coastlinecolor=COLORS["muted"],
             showcountries=True,
-            countrycolor="#444444",
+            countrycolor=COLORS["line"],
             showland=True,
-            landcolor="lightgray"
+            landcolor="#ece7de"
         )
     else:
         fig.update_geos(
@@ -855,11 +965,11 @@ def update_infant_map(
             projection_scale=1,
             showframe=False,
             showcoastlines=True,
-            coastlinecolor="#444444",
+            coastlinecolor=COLORS["muted"],
             showcountries=True,
-            countrycolor="#444444",
+            countrycolor=COLORS["line"],
             showland=True,
-            landcolor="lightgray"
+            landcolor="#ece7de"
         )
 
     return fig, country_info
@@ -942,9 +1052,9 @@ def update_transition_graph(selected_regions, selected_countries, selected_year)
                 name=region,
                 marker=dict(
                     size=region_data["total_mortality"].clip(lower=5, upper=150) / 4,
-                    color=transition_region_colors.get(region, "#999999"),
+                    color=transition_region_colors.get(region, "#918b82"),
                     opacity=0.35,
-                    line=dict(width=0.5, color="white")
+                    line=dict(width=0.5, color=COLORS["surface"])
                 ),
                 text=region_data["Country Name"],
                 customdata=region_data[
@@ -987,7 +1097,7 @@ def update_transition_graph(selected_regions, selected_countries, selected_year)
                 name=f"{country} trail",
                 line=dict(
                     width=2,
-                    color="#444444"
+                    color=COLORS["muted"]
                 ),
                 opacity=0.35,
                 hoverinfo="skip",
@@ -1008,14 +1118,14 @@ def update_transition_graph(selected_regions, selected_countries, selected_year)
                     textposition="top center",
                     textfont=dict(
                         size=13,
-                        color="#111111",
-                        family="Arial Black"
+                        color=COLORS["ink"],
+                        family=FONT_STACK
                     ),
                     marker=dict(
                         size=18,
-                        color=transition_region_colors.get(region, "#111111"),
+                        color=transition_region_colors.get(region, "#181716"),
                         opacity=0.95,
-                        line=dict(width=2, color="black")
+                        line=dict(width=2, color=COLORS["ink"])
                     ),
                     customdata=current_country[
                         ["male_mortality", "female_mortality", "region"]
@@ -1037,7 +1147,7 @@ def update_transition_graph(selected_regions, selected_countries, selected_year)
     fig.add_hline(
         y=0,
         line_dash="dash",
-        line_color="#666666",
+        line_color=COLORS["quiet"],
         line_width=1
     )
 
@@ -1045,32 +1155,33 @@ def update_transition_graph(selected_regions, selected_countries, selected_year)
         title=f"Health Transition Scatter ({selected_year})",
         title_x=0.5,
         height=720,
-        plot_bgcolor="white",
-        paper_bgcolor="white",
+        plot_bgcolor=COLORS["surface"],
+        paper_bgcolor=COLORS["surface"],
 
         xaxis=dict(
             title="Total infant mortality, deaths per 1,000 live births",
             range=[0, 230],
-            gridcolor="#e6e6e6",
+            gridcolor=COLORS["line"],
             zeroline=False
         ),
 
         yaxis=dict(
             title="Male − Female infant mortality gap",
             range=[-10, 32],
-            gridcolor="#e6e6e6",
+            gridcolor=COLORS["line"],
             zeroline=True,
-            zerolinecolor="#555555"
+            zerolinecolor=COLORS["quiet"]
         ),
 
         legend=dict(
             title="Region / Highlighted Countries",
             x=1.02,
             y=1,
-            bgcolor="rgba(255,255,255,0.85)"
+            bgcolor="rgba(255,253,250,0.9)"
         ),
 
-        margin=dict(l=80, r=230, t=70, b=45)
+        font=dict(family=FONT_STACK, color=COLORS["ink"]),
+        margin=dict(l=80, r=210, t=70, b=48)
     )
 
     return fig
