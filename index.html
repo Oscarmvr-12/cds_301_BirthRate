@@ -5,6 +5,7 @@
   <meta name="description" content="New Developed Country Criteria">
   <meta name="keywords" content="development, social indicators, data visualization">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>New Developed Country Criteria</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
@@ -12,7 +13,38 @@
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.png">
+
+  <style>
+    .custom-image {
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .dashboard-frame {
+      width: 100%;
+      border: 1px solid #dddddd;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      background: white;
+    }
+
+    .dashboard-large {
+      height: 1050px;
+      margin-bottom: 4rem;
+    }
+
+    .dashboard-medium {
+      height: 760px;
+      margin-bottom: 3rem;
+    }
+
+    iframe {
+      border: none;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </head>
 
 <body>
@@ -22,79 +54,72 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">New Developed Country Criteria</h1>
+
+          <h1 class="title is-1 publication-title">
+            New Developed Country Criteria
+          </h1>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block">Spring Park<sup>1</sup>,</span>
-            <span class="author-block">Joonseop Jang<sup>1</sup>, and</span>
-            <span class="author-block">Oscar Molina Romualdo<sup>1</sup></span>
+            <span class="author-block">
+              Spring Park,
+            </span>
+
+            <span class="author-block">
+              Joonseop Jang,
+            </span>
+
+            <span class="author-block">
+              Oscar Molina Romualdo
+            </span>
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>George Mason University Korea</span>
+            <span class="author-block">
+              George Mason University Korea
+            </span>
           </div>
+
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            Countries are often labeled as “developed” using income-based thresholds such as GNI per capita. However, income alone may not fully capture the broader social conditions associated with development. In this project, we examine whether social indicators such as fertility, infant mortality, migrant share, aging, and service-sector employment align with conventional GNI-based classifications. Using World Bank World Development Indicators and country groupings from the UN World Economic Situation and Prospects 2025 framework, we compare patterns across 175 countries. Our goal is to show that development is multidimensional and that a broader social development perspective may reveal important differences that income-based definitions overlook.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- ===================================================== -->
+<!-- ABSTRACT -->
+<!-- ===================================================== -->
 
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Project Motivation</h2>
+
+    <h2 class="title is-3 has-text-centered">
+      Abstract
+    </h2>
+
     <div class="content has-text-justified">
       <p>
-        The traditional definition of a developed country usually relies on national income. This approach is convenient and widely used, but it can be too narrow. A country may cross an income threshold while still facing serious demographic, health, or structural challenges. Likewise, some countries may display social characteristics commonly associated with development even if their income level alone does not fully reflect that progress.
+        Countries are often labeled as “developed” using income-based thresholds such as GNI per capita. However, income alone may not fully capture the broader social conditions associated with development. In this project, we examine whether social indicators such as fertility, infant mortality, migrant share, aging, and service-sector employment align with conventional GNI-based classifications.
       </p>
+
       <p>
-        Our project asks a simple question: <strong>should developed country status be defined by income alone, or should it also include social outcomes?</strong> To answer this, we visualize how several social indicators relate to established country classifications and then propose a broader <strong>Social Development Index</strong> as an alternative lens.
+        Using World Bank World Development Indicators and country groupings from the UN World Economic Situation and Prospects framework, we compare patterns across countries to show that development is multidimensional and that broader social indicators may reveal important differences that income-based definitions overlook.
       </p>
     </div>
+
   </div>
 </section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Data and Method</h2>
-    <div class="content has-text-justified">
-      <p>
-        We use the most recent available data from the <strong>World Bank World Development Indicators (WDI)</strong> for 175 countries. For country group classifications, we follow the <strong>UN World Economic Situation and Prospects (WESP) 2025</strong> framework, which separates countries into developed economies, economies in transition, and developing economies.
-      </p>
-      <p>
-        We focus on five social dimensions that are commonly linked to development:
-      </p>
-      <ul>
-        <li>Low fertility</li>
-        <li>Low infant mortality</li>
-        <li>Higher international migrant share</li>
-        <li>Population aging</li>
-        <li>Larger service-sector share</li>
-      </ul>
-      <p>
-        The visualizations below compare these indicators across country groups and help us evaluate whether development is better understood as a multidimensional social process rather than a purely income-based label.
-      </p>
-    </div>
-  </div>
-</section>
+<!-- ===================================================== -->
+<!-- SECTION 1 -->
+<!-- ===================================================== -->
 
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">1. Fertility and Development</h2>
+
+    <h2 class="title is-3 has-text-centered">
+      1. Fertility and Development
+    </h2>
+
     <div class="content has-text-justified">
       <p>
         Fertility decline is one of the most widely observed demographic patterns associated with development. Lower fertility often emerges alongside urbanization, women’s education, rising living costs, and expanded access to healthcare and family planning.
@@ -103,165 +128,257 @@
 
     <div class="columns is-centered is-variable is-5">
 
-  <!-- FERTILITY 1 -->
-  <div class="column has-text-centered">
+      <div class="column has-text-centered">
 
-    <figure class="image">
-      <img
-        src="./static/images/fertility1.png"
-        alt="Fertility visualization 1"
-        style="
-          width:100%;
-          height:auto;
-          border-radius:12px;
-          box-shadow:0 2px 10px rgba(0,0,0,0.08);
-        ">
-    </figure>
+        <figure class="image">
+          <img
+            src="./static/images/fertility1.png"
+            alt="Fertility visualization 1"
+            class="custom-image">
+        </figure>
 
-    <figcaption class="is-size-6 has-text-grey mt-2">
-      Figure 1A. Fertility patterns across countries and development groups.
-    </figcaption>
+        <figcaption class="is-size-6 has-text-grey mt-2">
+          Figure 1A. Fertility patterns across countries and development groups.
+        </figcaption>
 
-  </div>
+      </div>
 
-  <!-- FERTILITY 2 -->
-  <div class="column has-text-centered">
+      <div class="column has-text-centered">
 
-    <figure class="image">
-      <img
-        src="./static/images/fertility2.png"
-        alt="Fertility visualization 2"
-        style="
-          width:100%;
-          height:auto;
-          border-radius:12px;
-          box-shadow:0 2px 10px rgba(0,0,0,0.08);
-        ">
-    </figure>
+        <figure class="image">
+          <img
+            src="./static/images/fertility2.png"
+            alt="Fertility visualization 2"
+            class="custom-image">
+        </figure>
 
-    <figcaption class="is-size-6 has-text-grey mt-2">
-      Figure 1B. Additional fertility comparison across development groups.
-    </figcaption>
+        <figcaption class="is-size-6 has-text-grey mt-2">
+          Figure 1B. Additional fertility comparison across development groups.
+        </figcaption>
 
-  </div>
+      </div>
 
-</div>
-    <div class="content has-text-justified">
+    </div>
+
+    <div class="content has-text-justified mt-5">
       <p>
-        We expect developed economies to cluster at lower fertility levels, while many developing economies remain higher. However, the chart also reveals important variation: some middle-income countries have already undergone major fertility declines, while some wealthy oil-producing states may not fit a simple demographic pattern. This suggests that demographic transition is strongly related to development, but not perfectly captured by income category alone.
+        Developed economies generally cluster at lower fertility levels, while many developing economies remain higher. However, the charts also reveal important variation: some middle-income countries have already undergone major fertility declines, while some wealthy economies do not fit a simple demographic pattern. This suggests that demographic transition is strongly related to development, but not perfectly captured by income category alone.
       </p>
     </div>
+
   </div>
 </section>
-  
+
+<!-- ===================================================== -->
+<!-- SECTION 2 -->
+<!-- ===================================================== -->
+
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">2. Migrant Share by Development Group</h2>
+
+    <h2 class="title is-3 has-text-centered">
+      2. Global Infant Mortality
+    </h2>
+
     <div class="content has-text-justified">
       <p>
-        This violin plot compares international migrant stock as a share of total population across developed economies, economies in transition, and developing economies. Migration can reflect labor-market attraction, economic opportunity, political stability, and global integration, all of which are often associated with development.
+        Infant mortality is one of the clearest indicators of social development because it reflects healthcare access, maternal health, nutrition, sanitation, and public infrastructure. Unlike income alone, it captures whether people experience the benefits of development in everyday life.
       </p>
     </div>
 
     <figure class="image has-text-centered">
-      <img src="./static/images/migrant_share_boxplot.png" alt="Box plot of migrant share by development group" style="display:inline-block; width:75%; height:auto;">
+      <img
+        src="./static/images/infant_mortality_map.png"
+        alt="Global infant mortality map"
+        style="display:inline-block; width:85%; height:auto;"
+        class="custom-image">
+
       <figcaption class="is-size-6 has-text-grey">
-        Figure 3. International migrant stock as a share of population across UN WESP development groups.
+        Figure 2. Global infant mortality rates in the most recent available year.
       </figcaption>
     </figure>
 
-    <div class="content has-text-justified">
+    <div class="content has-text-justified mt-5">
       <p>
-        Developed economies generally show the highest migrant shares and the greatest variation. Economies in transition tend to fall in the middle, while most developing economies remain at lower levels. At the same time, several extreme outliers, such as Gulf countries, remind us that high migrant share alone does not automatically imply broad-based development.
+        The map shows a strong geographic divide. Developed countries generally have very low infant mortality rates, while much higher rates remain concentrated in parts of Sub-Saharan Africa and other lower-income regions. This provides strong evidence that health outcomes are deeply tied to development and should play a role in how development is defined.
       </p>
     </div>
+
   </div>
 </section>
 
+<!-- ===================================================== -->
+<!-- SECTION 3 -->
+<!-- ===================================================== -->
+
 <section class="section">
-  <div class="container is-max-widescreen">
+  <div class="container is-max-desktop">
+
+    <h2 class="title is-3 has-text-centered">
+      3. Migrant Share by Development Group
+    </h2>
+
+    <div class="content has-text-justified">
+      <p>
+        This box plot compares international migrant stock as a share of total population across developed economies, economies in transition, and developing economies. Migration can reflect labor-market attraction, economic opportunity, political stability, and global integration, all of which are often associated with development.
+      </p>
+    </div>
+
+    <figure class="image has-text-centered">
+      <img
+        src="./static/images/migrant_share_boxplot.png"
+        alt="Box plot of migrant share by development group"
+        style="display:inline-block; width:75%; height:auto;"
+        class="custom-image">
+
+      <figcaption class="is-size-6 has-text-grey">
+        Figure 3. International migrant stock as a share of population across development groups.
+      </figcaption>
+    </figure>
+
+    <div class="content has-text-justified mt-5">
+      <p>
+        Developed economies generally show the highest migrant shares and the greatest variation. Economies in transition tend to fall in the middle, while most developing economies remain at lower levels. At the same time, several extreme outliers remind us that high migrant share alone does not automatically imply broad-based development.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================================================== -->
+<!-- SECTION 3B -->
+<!-- ===================================================== -->
+
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <h2 class="title is-3 has-text-centered">
+      3.1 Geographic Distribution of Migrant Share Outliers
+    </h2>
+
+    <div class="content has-text-justified">
+      <p>
+        This map examines the geographic distribution of outlier countries within the developing economies group in 2024, focusing on historical and geographic factors that may help explain their unusually high international migrant stock.
+      </p>
+
+      <p>
+        Using the 1.5×IQR rule, nine outlier countries were identified: Afghanistan, Angola, the United Arab Emirates, Argentina, Burundi, Benin, Burkina Faso, Bangladesh, and Bahrain. Rather than forming one single regional cluster, these countries are spread across Africa, the Middle East, South Asia, and South America.
+      </p>
+    </div>
+
+    <figure class="image has-text-centered">
+      <img
+        src="./static/images/outlier.png"
+        alt="Outlier migrant share map"
+        style="display:inline-block; width:100%; height:auto;"
+        class="custom-image">
+
+      <figcaption class="is-size-6 has-text-grey">
+        Figure 4. Geographic distribution of migrant share outliers among developing economies in 2024.
+      </figcaption>
+    </figure>
+
+    <div class="content has-text-justified mt-5">
+      <p>
+        Their locations suggest that migration patterns are closely connected to each country’s historical and geographic context. Gulf countries such as the United Arab Emirates and Bahrain have long relied on foreign labor migration, while countries such as Afghanistan, Angola, and Burundi have been shaped by histories of conflict, displacement, and cross-border movement.
+      </p>
+
+      <p>
+        West African outliers such as Benin and Burkina Faso also reflect the importance of regional mobility and porous borders. Overall, the map shows that high migrant stock among developing economies is not only a statistical outlier pattern, but also a reflection of deeper historical experiences, geographic position, and regional migration systems.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================================================== -->
+<!-- OSCAR SECTION -->
+<!-- ===================================================== -->
+
+<section class="section">
+  <div class="container is-fluid">
 
     <h2 class="title is-3 has-text-centered">
       4. Interactive Infant Mortality Visualizations
     </h2>
 
-    <div class="content has-text-justified">
+    <div class="content has-text-justified"
+         style="max-width:1100px; margin:0 auto 2rem auto;">
+
       <p>
-        While the previous infant mortality map provides a geographic snapshot of global health outcomes, the following interactive visualizations expand the analysis by examining how infant mortality changes across countries, sex categories, and time. These dashboards allow users to explore long-term health transition, compare regional development patterns, and observe how sex-based mortality inequality behaves as countries modernize.
+        While the previous infant mortality map provides a geographic snapshot of global health outcomes, the following interactive visualizations expand the analysis by examining how infant mortality changes across countries, sex categories, and time.
+      </p>
+
+      <p>
+        These dashboards allow users to explore long-term health transition, compare regional development patterns, and observe how sex-based mortality inequality behaves as countries modernize.
       </p>
     </div>
 
+    <!-- DASHBOARD 1 -->
+
     <h3 class="title is-4 has-text-centered">
-      Dashboard 1 & 2 — Infant Mortality and Health Transition Explorer
+      Dashboard 1 — Infant Mortality and Health Transition Explorer
     </h3>
 
-    <div class="content has-text-justified">
+    <div class="content has-text-justified"
+         style="max-width:1100px; margin:0 auto 2rem auto;">
+
       <p>
         This interactive dashboard combines a global infant mortality map with a health transition scatter plot. Users can filter by country, region, year, and sex category to examine how infant mortality rates decline over time and how countries move through broader stages of health development.
       </p>
 
       <p>
-        The scatter plot specifically visualizes developmental transition by plotting total infant mortality against the male–female mortality gap. As countries develop, most shift toward lower mortality levels, although the pace of transition differs substantially across regions. Together, the visualizations demonstrate that health transition is dynamic, uneven, and closely connected to broader patterns of development and inequality.
+        The scatter plot specifically visualizes developmental transition by plotting total infant mortality against the male–female mortality gap. As countries develop, most shift toward lower mortality levels, although the pace of transition differs substantially across regions.
       </p>
     </div>
 
-    <div style="
-      width: 100%;
-      height: 1000px;
-      border: 1px solid #dddddd;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      margin-bottom: 4rem;
-    ">
+    <div class="dashboard-frame dashboard-large">
       <iframe
         title="Infant Mortality Dash App"
-        src="https://cds-301-birthrate.onrender.com"
-        width="100%"
-        height="100%"
-        style="border: none; overflow: hidden;">
+        src="https://cds-301-birthrate.onrender.com">
       </iframe>
     </div>
+
+    <!-- DASHBOARD 2 -->
 
     <h3 class="title is-4 has-text-centered">
-      Dashboard 3 — Male–Female Infant Mortality Gap
+      Dashboard 2 — Male–Female Infant Mortality Gap
     </h3>
 
-    <div class="content has-text-justified">
+    <div class="content has-text-justified"
+         style="max-width:1100px; margin:0 auto 2rem auto;">
+
       <p>
-        This visualization isolates the male–female infant mortality gap across countries and over time. Positive values indicate higher male infant mortality, while negative values indicate higher female infant mortality. By focusing specifically on the mortality difference itself, the chart highlights where sex-based inequality persists geographically even as overall infant mortality improves worldwide.
+        This visualization isolates the male–female infant mortality gap across countries and over time. Positive values indicate higher male infant mortality, while negative values indicate higher female infant mortality.
       </p>
 
       <p>
-        The divergence-style choropleth map allows viewers to examine how demographic inequality changes historically across regions and reinforces the idea that improvements in healthcare and development do not always eliminate inequality uniformly.
+        By focusing specifically on the mortality difference itself, the chart highlights where sex-based inequality persists geographically even as overall infant mortality improves worldwide.
       </p>
     </div>
 
-    <div style="
-      width: 100%;
-      height: 760px;
-      border: 1px solid #dddddd;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-      margin-bottom: 3rem;
-    ">
+    <div class="dashboard-frame dashboard-medium">
       <iframe
         title="Male Female Infant Mortality Gap"
-        src="./static/dashboards/MaleVFemale.html"
-        width="100%"
-        height="100%"
-        style="border: none; overflow: hidden;">
+        src="./static/dashboards/MaleVFemale.html">
       </iframe>
     </div>
+
+    <!-- OVERALL -->
 
     <h3 class="title is-4 has-text-centered">
       Overall Findings
     </h3>
 
-    <div class="content has-text-justified">
+    <div class="content has-text-justified"
+         style="max-width:1100px; margin:0 auto;">
+
       <p>
-        Together, these visualizations demonstrate that infant mortality is not only a strong indicator of development, but also a way to examine global inequality and health transition over time. Although most countries experienced substantial declines in infant mortality between 1960 and 2024, the pace of improvement differed significantly across regions and stages of development.
+        Together, these visualizations demonstrate that infant mortality is not only a strong indicator of development, but also a way to examine global inequality and health transition over time.
+      </p>
+
+      <p>
+        Although most countries experienced substantial declines in infant mortality between 1960 and 2024, the pace of improvement differed significantly across regions and stages of development.
       </p>
 
       <p>
@@ -272,18 +389,27 @@
   </div>
 </section>
 
+<!-- ===================================================== -->
+<!-- OUTRO -->
+<!-- ===================================================== -->
+
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Outro</h2>
-    <div class="content">
+
+    <h2 class="title is-3 has-text-centered">
+      Outro
+    </h2>
+
+    <div class="content has-text-justified">
       <p>
         This project demonstrates that development is multidimensional and cannot be fully understood through income-based classifications alone. By comparing fertility, infant mortality, migrant share, and other demographic indicators across countries and development groups, we observe that social outcomes often reveal important differences that traditional economic measures may overlook.
       </p>
 
       <p>
-        Together, the visualizations suggest that development should be viewed as a broader social process shaped by healthcare access, demographic transition, migration patterns, and long-term structural change. Rather than relying solely on GNI per capita thresholds, a multidimensional approach may provide a more complete understanding of how countries experience and sustain development over time.
+        Together, the visualizations suggest that development should be viewed as a broader social process shaped by healthcare access, demographic transition, migration patterns, and long-term structural change.
       </p>
     </div>
+
   </div>
 </section>
 
