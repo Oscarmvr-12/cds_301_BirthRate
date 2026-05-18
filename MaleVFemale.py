@@ -126,4 +126,5 @@ fig.write_html(
     full_html=True
 )
 
-fig.show()
+if os.environ.get("SHOW_PLOTLY_PREVIEW") == "1":
+    fig.show()
